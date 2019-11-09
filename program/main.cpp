@@ -57,14 +57,10 @@ int main(){
 		// para decidir quando ler o último termo como '\n'
 		if(!usuarioTipo.compare("adulto")){
 			std::getline(usuariosDatabase, usuarioSaldo, '\n');
-			usuarioResponsavel_id = "NULL";
-
 			usuarios.push_back(new Adulto(std::stoi(usuarioId), usuarioNome, std::stoi(usuarioIdade), std::stof(usuarioSaldo), criancas));
 		}
 		else if(!usuarioTipo.compare("idoso")){
 			std::getline(usuariosDatabase, usuarioSaldo, '\n');
-			usuarioResponsavel_id = "NULL";
-
 			usuarios.push_back(new Idoso(std::stoi(usuarioId), usuarioNome, std::stoi(usuarioIdade), std::stof(usuarioSaldo), criancas));
 		}
 		else if(!usuarioTipo.compare("crianca")){
