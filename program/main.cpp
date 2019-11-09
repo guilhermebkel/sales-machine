@@ -49,6 +49,7 @@ int main(){
 
 		// Verifica o tipo da linha atual
 		// para decidir quando ler o último termo como '\n'
+		// visto que a forma de leitura de criancas e adultos é diferente
 		if(!usuarioTipo.compare("adulto")){
 			std::getline(usuariosDatabase, usuarioSaldo, '\n');
 			usuarios.push_back(new Adulto(std::stoi(usuarioId), usuarioNome, std::stoi(usuarioIdade), std::stof(usuarioSaldo)));
@@ -66,10 +67,12 @@ int main(){
 				Adulto* adulto = dynamic_cast<Adulto*>(usuario);
 				Idoso* idoso = dynamic_cast<Idoso*>(usuario);
 
+				// Caso for adulto
 				if(adulto != nullptr && adulto->get_id() == std::stoi(usuarioResponsavel_id)){
 					usuarioResponsavel = adulto;
 					break;
 				}
+				// Caso for idoso
 				else if(idoso != nullptr && idoso->get_id() == std::stoi(usuarioResponsavel_id)){
 					usuarioResponsavel = idoso;
 					break;
