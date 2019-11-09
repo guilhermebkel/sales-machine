@@ -4,7 +4,7 @@
 #include "iostream"
 #include "vector"
 
-#include "mid/evento_infantil.h"
+#include "events/evento_infantil.h"
 
 class TeatroFantoche: public EventoInfantil {
 	private:

@@ -1,4 +1,4 @@
-#include "mid/adulto.h"
+#include "users/adulto.h"
 
 Adulto::Adulto(int id, std::string nome, int idade, float saldo, std::vector<Crianca*> dependentes):
 	Usuario(id, nome, idade, saldo){

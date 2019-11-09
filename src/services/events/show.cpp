@@ -1,4 +1,4 @@
-#include "low/show.h"
+#include "events/show.h"
 
 Show::Show(int id, std::string nome, Usuario* responsavel, std::vector<int> capacidades, std::vector<int> precos, int quota_idoso, int aberturaPortoes, std::vector<std::string> artistas):
 	EventoAdulto(id, nome, responsavel, capacidades, precos, quota_idoso){

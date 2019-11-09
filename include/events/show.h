@@ -5,7 +5,7 @@
 #include "vector"
 #include "string"
 
-#include "mid/evento_adulto.h"
+#include "events/evento_adulto.h"
 
 class Show: public EventoAdulto {
 	private:

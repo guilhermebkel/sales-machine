@@ -3,8 +3,8 @@
 
 #include <vector>
 
-#include "high/usuario.h"
-#include "mid/crianca.h"
+#include "users/usuario.h"
+#include "users/crianca.h"
 
 class Adulto: public Usuario {
 	public:

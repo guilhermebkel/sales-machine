@@ -5,15 +5,17 @@
 #include <string>
 #include <vector>
 
-#include "high/usuario.h"
-#include "mid/crianca.h"
-#include "mid/adulto.h"
-#include "low/idoso.h"
+#include "users/usuario.h"
+#include "users/crianca.h"
+#include "users/adulto.h"
+#include "users/idoso.h"
 
-#include "low/boate.h"
-#include "low/show.h"
-#include "mid/cinema.h"
-#include "low/teatro_fantoche.h"
+#include "events/boate.h"
+#include "events/show.h"
+#include "events/cinema.h"
+#include "events/teatro_fantoche.h"
+
+#include "machines/maquina_fantoche.h"
 
 int main(){
 	std::string linha, termo;
@@ -207,6 +209,10 @@ int main(){
 		eventoQuota_idoso = 0;
 	}
 	eventos.close();
+
+	MaquinaFantoche maquina(teatros);
+
+	maquina.show_eventos();
 
 	return 0;
 }
