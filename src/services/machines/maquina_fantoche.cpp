@@ -11,7 +11,7 @@ MaquinaFantoche::MaquinaFantoche(std::vector<Evento*> eventos, std::vector<Usuar
       this->eventos.push_back(teatro);
     }
   }
-  
+
   this->usuarios = usuarios;
 }
 
@@ -60,17 +60,34 @@ void MaquinaFantoche::show_horarios(int evento_id){
 }
 
 void MaquinaFantoche::buy_ingresso(int evento_id, int horario_key, int usuario_id){
-  if(this->total_ingressos <= 0){
-    std::cout << "=> Infelizmente nao temos ingressos disponiveis para esse evento" << std::endl;
-  }
-
   for(TeatroFantoche* evento : this->eventos){
     std::cout << std::left;
     if(evento->get_id() == evento_id){
       int preco = 99999;
+      int lote;
       std::string nomeUsuario;
       bool success;
 
+      for(int i=0; i<evento->get_precos().size(); i++){
+        if(evento->get_precos()[i] < preco){
+          preco = evento->get_precos()[i];
+        }
+        if(i+1 == evento->get_precos().size()){
+          if(evento->get_capacidades()[i] <= 0){
+            evento->get_capacidades().erase(evento->get_capacidades().begin()-i);
+            evento->get_precos().erase(evento->get_precos().begin()-i);
+            i = 0;
+            preco = 99999;
+          }
+          else {
+            lote = i;
+          }
+        }
+        if(evento->get_precos().size() == 0){
+          success = false;
+          std::cout << "=> Infelizmente nao temos ingressos disponiveis para esse evento" << std::endl;
+        }
+      }
       for(int precoEvento : evento->get_precos()){
         if(precoEvento < preco){
           preco = precoEvento;
@@ -98,7 +115,7 @@ void MaquinaFantoche::buy_ingresso(int evento_id, int horario_key, int usuario_i
         std::cout << "- Evento: " << evento->get_nome() << std::endl;
         std::cout << "- Horario: " << horario << 'h' << std::endl;
         std::cout << "- Preco: R$" << preco << ",00" << std::endl;
-        this->total_ingressos--;
+        evento->get_capacidades()[lote]--;
       }
       else{
         std::cout << "=> Seu saldo é insuficiente para realizar a compra do ingresso" << std::endl;

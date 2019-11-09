@@ -213,10 +213,10 @@ int main(){
 	}
 	eventosDatabase.close();
 
-	// MaquinaFantoche maquina(eventos, usuarios);
+	MaquinaFantoche maquina(eventos, usuarios);
 	// maquina.show_eventos();
 	// maquina.show_horarios(5);
-	// maquina.buy_ingresso(5, 1, 1);
+	maquina.buy_ingresso(5, 1, 1);
 	
 	// Desaloca todos os ponteiros dinâmicos utilizados
 	for (Usuario *usuario : usuarios){
