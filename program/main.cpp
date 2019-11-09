@@ -24,10 +24,12 @@ int main(){
 	std::istringstream stream_string;
 	int contador;
 
+	// Variáveis utilizadas para a leitura de usuários
 	std::string usuarioId, usuarioTipo, usuarioNome, usuarioIdade, usuarioSaldo, usuarioResponsavel_id;
 	std::vector<Crianca*> usuarioDependentes;
 	Adulto* usuarioResponsavel = nullptr;
 
+	// Variáveis utilizadas para a leitura de eventos
 	std::string eventoId, eventoNome, eventoPublico, eventoTipo, eventoResponsavel_id, eventoNumTipos;
 	int eventoHoraInicio, eventoHoraFim, eventoAberturaPortoes, eventoQuota_idoso, eventoDuracao;
 	std::vector<int> eventoCapacidades, eventoPrecos, eventoHorariosInicio;
