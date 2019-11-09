@@ -211,11 +211,10 @@ int main(){
 	eventos.close();
 
 	MaquinaFantoche maquina(teatros);
+	maquina.show_eventos();
+	maquina.show_horarios(5);
+	maquina.buy_ingresso(5, 0);
 
-	// maquina.show_eventos();
-	// maquina.show_horarios(5);
-	maquina.buy_ingresso(5, 1);
-	
 	// Desaloca todos os ponteiros dinâmicos utilizados
 	for (Crianca *crianca : criancas){
 		delete crianca;

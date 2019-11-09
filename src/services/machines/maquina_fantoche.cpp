@@ -60,7 +60,10 @@ void MaquinaFantoche::buy_ingresso(int evento_id, int ingresso_id){
     if(evento->get_id() == evento_id){
       int horario = evento->get_horarios()[ingresso_id];
 
-      evento->get_horarios().erase(evento->get_horarios().begin() + ingresso_id);
+      std::vector<int>::iterator it;
+      it = evento->get_horarios().begin();
+      evento->get_horarios().erase(it + ingresso_id);
+      
       std::cout << "=> Compra efetuada com sucesso! Segue abaixo os detalhes:" << std::endl;
       std::cout << "- Evento: " << evento->get_nome() << std::endl;
       std::cout << "- Horario: " << horario << 'h' << std::endl;
