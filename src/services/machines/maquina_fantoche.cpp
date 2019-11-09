@@ -88,11 +88,6 @@ void MaquinaFantoche::buy_ingresso(int evento_id, int horario_key, int usuario_i
           std::cout << "=> Infelizmente nao temos ingressos disponiveis para esse evento" << std::endl;
         }
       }
-      for(int precoEvento : evento->get_precos()){
-        if(precoEvento < preco){
-          preco = precoEvento;
-        }
-      }
 
       for(Usuario *usuario : this->usuarios){
         if(usuario->get_id() == usuario_id){
