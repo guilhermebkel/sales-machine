@@ -34,9 +34,6 @@ int main(){
 	std::vector<std::string> eventoArtistas;
 	Usuario* eventoResponsavel = nullptr;
 
-	std::vector<Crianca*> criancas;
-	std::vector<Adulto*> adultos;
-	std::vector<Idoso*> idosos;
 	std::vector<Usuario*> usuarios;
 
 	std::vector<Boate*> boates;
@@ -57,11 +54,11 @@ int main(){
 		// para decidir quando ler o último termo como '\n'
 		if(!usuarioTipo.compare("adulto")){
 			std::getline(usuariosDatabase, usuarioSaldo, '\n');
-			usuarios.push_back(new Adulto(std::stoi(usuarioId), usuarioNome, std::stoi(usuarioIdade), std::stof(usuarioSaldo), criancas));
+			usuarios.push_back(new Adulto(std::stoi(usuarioId), usuarioNome, std::stoi(usuarioIdade), std::stof(usuarioSaldo)));
 		}
 		else if(!usuarioTipo.compare("idoso")){
 			std::getline(usuariosDatabase, usuarioSaldo, '\n');
-			usuarios.push_back(new Idoso(std::stoi(usuarioId), usuarioNome, std::stoi(usuarioIdade), std::stof(usuarioSaldo), criancas));
+			usuarios.push_back(new Idoso(std::stoi(usuarioId), usuarioNome, std::stoi(usuarioIdade), std::stof(usuarioSaldo)));
 		}
 		else if(!usuarioTipo.compare("crianca")){
 			std::getline(usuariosDatabase, usuarioSaldo, ',');

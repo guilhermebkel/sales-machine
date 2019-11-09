@@ -1,8 +1,7 @@
 #include "users/adulto.h"
 
-Adulto::Adulto(int id, std::string nome, int idade, float saldo, std::vector<Crianca*> dependentes):
+Adulto::Adulto(int id, std::string nome, int idade, float saldo):
 	Usuario(id, nome, idade, saldo){
-		_dependentes = dependentes;
 }
 
 int Adulto::get_id(){

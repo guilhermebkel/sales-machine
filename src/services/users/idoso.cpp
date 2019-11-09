@@ -1,7 +1,7 @@
 #include "users/idoso.h"
 
-Idoso::Idoso(int id, std::string nome, int idade, float saldo, std::vector<Crianca*> dependentes):
-	Adulto(id, nome, idade, saldo, dependentes){
+Idoso::Idoso(int id, std::string nome, int idade, float saldo):
+	Adulto(id, nome, idade, saldo){
 }
 
 int Idoso::get_idade(){
