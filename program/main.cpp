@@ -214,7 +214,7 @@ int main(){
 
 	maquina.show_eventos();
 
-	// Free up all the memory allocated by pointers
+	// Desaloca todos os ponteiros dinâmicos utilizados
 	for (Crianca *crianca : criancas){
 		delete crianca;
 	}

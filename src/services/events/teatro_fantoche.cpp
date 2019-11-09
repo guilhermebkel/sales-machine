@@ -24,3 +24,7 @@ int TeatroFantoche::get_id(){
 std::string TeatroFantoche::get_nome(){
 	return _nome;
 }
+
+std::vector<int> TeatroFantoche::get_horarios(){
+	return _horarios;
+}
