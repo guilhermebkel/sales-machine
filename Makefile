@@ -2,7 +2,7 @@ CC := g++
 SRCDIR := src
 BUILDDIR := build
 TARGET := main
-CFLAGS := -g -O3 -std=c++11 -I include/
+CFLAGS := -g -O3 -std=c++11 -I include/ -I third_party/
 
 all: main
 

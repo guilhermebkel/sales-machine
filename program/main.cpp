@@ -214,5 +214,16 @@ int main(){
 
 	maquina.show_eventos();
 
+	// Free up all the memory allocated by pointers
+	for (Crianca *crianca : criancas){
+		delete crianca;
+	}
+	for (Adulto *adulto : adultos){
+		delete adulto;
+	}
+	for (Idoso *idoso : idosos){
+		delete idoso;
+	}
+
 	return 0;
 }
