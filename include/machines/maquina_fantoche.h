@@ -8,11 +8,11 @@
 
 class MaquinaFantoche {
   private:
-    std::vector<TeatroFantoche> evento_fantoche;
-    int total_ingressos;
+    std::vector<TeatroFantoche*> eventos;
+    int total_ingressos = 10;
 
   public:
-    MaquinaFantoche(std::vector<TeatroFantoche> evento_fantoche);
+    MaquinaFantoche(std::vector<TeatroFantoche*> evento);
     void show_eventos();
     void show_horarios(int evento_id);
     void buy_ingresso(int evento_id, int horario_key);

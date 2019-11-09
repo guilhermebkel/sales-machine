@@ -36,10 +36,10 @@ int main(){
 	std::vector<Adulto*> adultos;
 	std::vector<Idoso*> idosos;
 
-	std::vector<Boate> boates;
-	std::vector<Show> shows;
-	std::vector<Cinema> cinemas;
-	std::vector<TeatroFantoche> teatros;
+	std::vector<Boate*> boates;
+	std::vector<Show*> shows;
+	std::vector<Cinema*> cinemas;
+	std::vector<TeatroFantoche*> teatros;
 
 	std::ifstream usuarios("database/usuarios.csv");
 
@@ -189,16 +189,16 @@ int main(){
 		}
 
 		if(eventoTipo == "boate"){
-			boates.push_back(Boate(std::stoi(eventoId), eventoNome, eventoResponsavel, eventoCapacidades, eventoPrecos, eventoQuota_idoso, eventoHoraInicio, eventoHoraFim));
+			boates.push_back(new Boate(std::stoi(eventoId), eventoNome, eventoResponsavel, eventoCapacidades, eventoPrecos, eventoQuota_idoso, eventoHoraInicio, eventoHoraFim));
 		}
 		else if(eventoTipo == "show"){
-			shows.push_back(Show(std::stoi(eventoId), eventoNome, eventoResponsavel, eventoCapacidades, eventoPrecos, eventoQuota_idoso, eventoAberturaPortoes, eventoArtistas));
+			shows.push_back(new Show(std::stoi(eventoId), eventoNome, eventoResponsavel, eventoCapacidades, eventoPrecos, eventoQuota_idoso, eventoAberturaPortoes, eventoArtistas));
 		}
 		else if(eventoTipo == "cinema"){
-			cinemas.push_back(Cinema(std::stoi(eventoId), eventoNome, eventoResponsavel, eventoCapacidades, eventoPrecos, eventoHorariosInicio, eventoDuracao));			
+			cinemas.push_back(new Cinema(std::stoi(eventoId), eventoNome, eventoResponsavel, eventoCapacidades, eventoPrecos, eventoHorariosInicio, eventoDuracao));			
 		}
 		else if(eventoTipo == "fantoche"){
-			teatros.push_back(TeatroFantoche(std::stoi(eventoId), eventoNome, eventoResponsavel, eventoCapacidades, eventoPrecos, eventoHorariosInicio));
+			teatros.push_back(new TeatroFantoche(std::stoi(eventoId), eventoNome, eventoResponsavel, eventoCapacidades, eventoPrecos, eventoHorariosInicio));
 		}
 
 		eventoCapacidades.clear();
@@ -212,8 +212,10 @@ int main(){
 
 	MaquinaFantoche maquina(teatros);
 
-	maquina.show_eventos();
-
+	// maquina.show_eventos();
+	// maquina.show_horarios(5);
+	maquina.buy_ingresso(5, 1);
+	
 	// Desaloca todos os ponteiros dinâmicos utilizados
 	for (Crianca *crianca : criancas){
 		delete crianca;
@@ -223,6 +225,18 @@ int main(){
 	}
 	for (Idoso *idoso : idosos){
 		delete idoso;
+	}
+	for(Boate *boate : boates){
+		delete boate;
+	}
+	for(Show *show : shows){
+		delete show;
+	}
+	for(Cinema *cinema : cinemas){
+		delete cinema;
+	}
+	for(TeatroFantoche *teatro : teatros){
+		delete teatro;
 	}
 
 	return 0;
