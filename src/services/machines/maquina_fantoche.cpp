@@ -3,11 +3,9 @@
 
 #include "machines/maquina_fantoche.h"
 
-MaquinaFantoche::MaquinaFantoche(std::vector<TeatroFantoche*> eventos, std::vector<Adulto*> adultos, std::vector<Crianca*> criancas, std::vector<Idoso*> idosos){
+MaquinaFantoche::MaquinaFantoche(std::vector<TeatroFantoche*> eventos, std::vector<Usuario*> usuarios){
   this->eventos = eventos;
-  this->adultos = adultos;
-  this->criancas = criancas;
-  this->idosos = idosos;
+  this->usuarios = usuarios;
 }
 
 void MaquinaFantoche::show_eventos(){
@@ -72,39 +70,15 @@ void MaquinaFantoche::buy_ingresso(int evento_id, int horario_key, int usuario_i
         }
       }
 
-      for(Adulto *adulto : this->adultos){
-        if(adulto->get_id() == usuario_id){
-          if(adulto->get_saldo() < preco){
+      for(Usuario *usuario : this->usuarios){
+        if(usuario->get_id() == usuario_id){
+          if(usuario->get_saldo() < preco){
             success = false;
           }
           else{
             success = true;
-            adulto->set_saldo(preco);
-            nomeUsuario = adulto->get_nome();
-          }
-        }
-      }
-      for(Crianca *crianca : this->criancas){
-        if(crianca->get_id() == usuario_id){
-          if(crianca->get_saldo() < preco){
-            success = false;
-          }
-          else{
-            success = true;
-            crianca->set_saldo(preco);
-            nomeUsuario = crianca->get_nome();
-          }
-        }
-      }
-      for(Idoso *idoso : this->idosos){
-        if(idoso->get_id() == usuario_id){
-          if(idoso->get_saldo() < preco){
-            success = false;
-          }
-          else{
-            success = true;
-            idoso->set_saldo(preco);
-            nomeUsuario = idoso->get_nome();
+            usuario->set_saldo(preco);
+            nomeUsuario = usuario->get_nome();
           }
         }
       }

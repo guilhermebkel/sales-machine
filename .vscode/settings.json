@@ -48,6 +48,8 @@
     "unordered_set": "cpp",
     "set": "cpp",
     "valarray": "cpp",
-    "map": "cpp"
+    "map": "cpp",
+    "any": "cpp",
+    "variant": "cpp"
   }
 }

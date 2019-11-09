@@ -5,20 +5,16 @@
 #include <vector>
 
 #include "events/teatro_fantoche.h"
-#include "users/adulto.h"
-#include "users/crianca.h"
-#include "users/idoso.h"
+#include "users/usuario.h"
 
 class MaquinaFantoche {
   private:
     std::vector<TeatroFantoche*> eventos;
-    std::vector<Adulto*> adultos;
-    std::vector<Crianca*> criancas;
-    std::vector<Idoso*> idosos;
+    std::vector<Usuario*> usuarios;
     int total_ingressos = 10;
 
   public:
-    MaquinaFantoche(std::vector<TeatroFantoche*> eventos, std::vector<Adulto*> adultos, std::vector<Crianca*> criancas, std::vector<Idoso*> idosos);
+    MaquinaFantoche(std::vector<TeatroFantoche*> eventos, std::vector<Usuario*> usuarios);
     void show_eventos();
     void show_horarios(int evento_id);
     void buy_ingresso(int evento_id, int horario_key, int usuario_id);

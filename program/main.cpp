@@ -37,6 +37,7 @@ int main(){
 	std::vector<Crianca*> criancas;
 	std::vector<Adulto*> adultos;
 	std::vector<Idoso*> idosos;
+	std::vector<Usuario*> usuarios;
 
 	std::vector<Boate*> boates;
 	std::vector<Show*> shows;
@@ -58,58 +59,64 @@ int main(){
 			std::getline(usuariosDatabase, usuarioSaldo, '\n');
 			usuarioResponsavel_id = "NULL";
 
-			adultos.push_back(new Adulto(std::stoi(usuarioId), usuarioNome, std::stoi(usuarioIdade), std::stof(usuarioSaldo), criancas));
+			usuarios.push_back(new Adulto(std::stoi(usuarioId), usuarioNome, std::stoi(usuarioIdade), std::stof(usuarioSaldo), criancas));
 		}
 		else if(!usuarioTipo.compare("idoso")){
 			std::getline(usuariosDatabase, usuarioSaldo, '\n');
 			usuarioResponsavel_id = "NULL";
 
-			idosos.push_back(new Idoso(std::stoi(usuarioId), usuarioNome, std::stoi(usuarioIdade), std::stof(usuarioSaldo), criancas));
+			usuarios.push_back(new Idoso(std::stoi(usuarioId), usuarioNome, std::stoi(usuarioIdade), std::stof(usuarioSaldo), criancas));
 		}
 		else if(!usuarioTipo.compare("crianca")){
 			std::getline(usuariosDatabase, usuarioSaldo, ',');
 			std::getline(usuariosDatabase, usuarioResponsavel_id, '\n');
 
-			// Associa o adulto respoonsavel com
-			// seu filho.
-			for(Adulto* adulto : adultos){
-				if(adulto->get_id() == std::stoi(usuarioResponsavel_id)){
+			// Associa o adulto respoonsavel com seu filho.
+			for(Usuario* usuario : usuarios){
+				Adulto* adulto = dynamic_cast<Adulto*>(usuario);
+				Idoso* idoso = dynamic_cast<Idoso*>(usuario);
+
+				if(adulto != nullptr && adulto->get_id() == std::stoi(usuarioResponsavel_id)){
 					usuarioResponsavel = adulto;
 					break;
 				}
-			}
-			for(Idoso* idoso : idosos){
-				if(idoso->get_id() == std::stoi(usuarioResponsavel_id)){
+				else if(idoso != nullptr && idoso->get_id() == std::stoi(usuarioResponsavel_id)){
 					usuarioResponsavel = idoso;
 					break;
 				}
 			}
 
-			criancas.push_back(new Crianca(std::stoi(usuarioId), usuarioNome, std::stoi(usuarioIdade), std::stof(usuarioSaldo), usuarioResponsavel));
+			usuarios.push_back(new Crianca(std::stoi(usuarioId), usuarioNome, std::stoi(usuarioIdade), std::stof(usuarioSaldo), usuarioResponsavel));
 		}
+
 		usuarioResponsavel = nullptr;
 	}
 	usuariosDatabase.close();
 
 	// Faz as associações dos dependentes de cada adulto
-	for(Adulto* adulto : adultos){
-		for(Crianca* crianca : criancas){
-			if(adulto->get_id() == crianca->get_responsavel()->get_id()){
+	for(Usuario* usuario : usuarios){
+		Adulto* adulto = dynamic_cast<Adulto*>(usuario);
+		Idoso* idoso = dynamic_cast<Idoso*>(usuario);
+
+		for(Usuario* usuario : usuarios){
+			Crianca* crianca = dynamic_cast<Crianca*>(usuario);
+			// Caso for adulto + crianca
+			if(adulto != nullptr && crianca != nullptr && adulto->get_id() == crianca->get_responsavel()->get_id()){
+				usuarioDependentes.push_back(crianca);
+			}
+			// Caso for idoso + crianca
+			else if(idoso != nullptr && crianca != nullptr && idoso->get_id() == crianca->get_responsavel()->get_id()){
 				usuarioDependentes.push_back(crianca);
 			}
 		}
-		if(usuarioDependentes.size()){
+
+		// Caso for adulto
+		if(usuarioDependentes.size() && adulto != nullptr){
 			adulto->set_dependentes(usuarioDependentes);
 			usuarioDependentes.clear();
 		}
-	}
-	for(Idoso* idoso : idosos){
-		for(Crianca* crianca : criancas){
-			if(idoso->get_id() == crianca->get_responsavel()->get_id()){
-				usuarioDependentes.push_back(crianca);
-			}
-		}
-		if(usuarioDependentes.size()){
+		// Caso for idoso
+		else if(usuarioDependentes.size() && idoso != nullptr){
 			idoso->set_dependentes(usuarioDependentes);
 			usuarioDependentes.clear();
 		}
@@ -179,13 +186,16 @@ int main(){
 	}
 
 		// Associa o responsável do evento com o evento em questão
-		for(Adulto* adulto : adultos){
-			if(adulto->get_id() == std::stoi(eventoResponsavel_id)){
+		for(Usuario* usuario : usuarios){
+			Adulto* adulto = dynamic_cast<Adulto*>(usuario);
+			Idoso* idoso = dynamic_cast<Idoso*>(usuario);
+
+			// Caso for adulto
+			if(adulto != nullptr && adulto->get_id() == std::stoi(eventoResponsavel_id)){
 				eventoResponsavel = adulto;
 			}
-		}
-		for(Idoso* idoso : idosos){
-			if(idoso->get_id() == std::stoi(eventoResponsavel_id)){
+			// Caso for idoso
+			else if(idoso != nullptr && idoso->get_id() == std::stoi(eventoResponsavel_id)){
 				eventoResponsavel = idoso;
 			}
 		}
@@ -212,20 +222,14 @@ int main(){
 	}
 	eventosDatabase.close();
 
-	MaquinaFantoche maquina(teatros, adultos, criancas, idosos);
+	MaquinaFantoche maquina(teatros, usuarios);
 	// maquina.show_eventos();
 	// maquina.show_horarios(5);
 	maquina.buy_ingresso(5, 1, 1);
 	
 	// Desaloca todos os ponteiros dinâmicos utilizados
-	for (Crianca *crianca : criancas){
-		delete crianca;
-	}
-	for (Adulto *adulto : adultos){
-		delete adulto;
-	}
-	for (Idoso *idoso : idosos){
-		delete idoso;
+	for (Usuario *usuario : usuarios){
+		delete usuario;
 	}
 	for(Boate *boate : boates){
 		delete boate;

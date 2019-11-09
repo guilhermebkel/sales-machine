@@ -28,3 +28,7 @@ float Crianca::get_saldo(){
 void Crianca::set_saldo(float quantia){
 	this->_saldo -= quantia;
 }
+
+void Crianca::set_responsavel(Adulto* responsavel){
+	this->_responsavel = responsavel;
+}
