@@ -41,7 +41,6 @@ int main(){
 	std::ifstream usuariosDatabase("database/usuarios.csv");
 
 	while(usuariosDatabase.good()){
-		
 		std::getline(usuariosDatabase, usuarioId, ',');
 		std::getline(usuariosDatabase, usuarioTipo, ',');
 		std::getline(usuariosDatabase, usuarioNome, ',');
@@ -118,7 +117,6 @@ int main(){
 	std::ifstream eventosDatabase("database/eventos.csv");
 
 	while(eventosDatabase.good()){
-
 		std::getline(eventosDatabase, eventoId, ',');
 		std::getline(eventosDatabase, eventoPublico, ',');
 
