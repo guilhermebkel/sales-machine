@@ -24,3 +24,7 @@ int Crianca::get_id(){
 float Crianca::get_saldo(){
 	return _saldo;
 }
+
+void Crianca::set_saldo(float quantia){
+	this->_saldo -= quantia;
+}

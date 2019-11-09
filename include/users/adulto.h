@@ -17,6 +17,7 @@ class Adulto: public Usuario {
 		std::string get_nome();
 		std::vector<Crianca*> get_dependentes();
 		float get_saldo();
+		void set_saldo(float quantia);
 };
 
 #endif

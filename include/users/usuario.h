@@ -18,6 +18,7 @@ class Usuario {
 		virtual std::string get_nome() = 0;
 		virtual int get_idade() = 0;
 		virtual float get_saldo() = 0;
+		virtual void set_saldo(float quantia) = 0;
 };
 
 #endif

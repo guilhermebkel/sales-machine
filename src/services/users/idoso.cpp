@@ -7,3 +7,7 @@ Idoso::Idoso(int id, std::string nome, int idade, float saldo, std::vector<Crian
 int Idoso::get_idade(){
 	return _idade;
 }
+
+void Idoso::set_saldo(float quantia){
+	this->_saldo -= quantia;
+}

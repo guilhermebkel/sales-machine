@@ -3,8 +3,11 @@
 
 #include "machines/maquina_fantoche.h"
 
-MaquinaFantoche::MaquinaFantoche(std::vector<TeatroFantoche*> evento_fantoche){
-  this->eventos = evento_fantoche;
+MaquinaFantoche::MaquinaFantoche(std::vector<TeatroFantoche*> eventos, std::vector<Adulto*> adultos, std::vector<Crianca*> criancas, std::vector<Idoso*> idosos){
+  this->eventos = eventos;
+  this->adultos = adultos;
+  this->criancas = criancas;
+  this->idosos = idosos;
 }
 
 void MaquinaFantoche::show_eventos(){
@@ -51,24 +54,75 @@ void MaquinaFantoche::show_horarios(int evento_id){
   }
 }
 
-void MaquinaFantoche::buy_ingresso(int evento_id, int ingresso_id){
+void MaquinaFantoche::buy_ingresso(int evento_id, int horario_key, int usuario_id){
   if(this->total_ingressos <= 0){
     std::cout << "=> Infelizmente nao temos ingressos disponiveis para esse evento" << std::endl;
   }
+
   for(TeatroFantoche* evento : this->eventos){
     std::cout << std::left;
     if(evento->get_id() == evento_id){
-      int horario = evento->get_horarios()[ingresso_id];
+      int preco = 99999;
+      std::string nomeUsuario;
+      bool success;
 
-      std::vector<int>::iterator it;
-      it = evento->get_horarios().begin();
-      evento->get_horarios().erase(it + ingresso_id);
-      
-      std::cout << "=> Compra efetuada com sucesso! Segue abaixo os detalhes:" << std::endl;
-      std::cout << "- Evento: " << evento->get_nome() << std::endl;
-      std::cout << "- Horario: " << horario << 'h' << std::endl;
+      for(int precoEvento : evento->get_precos()){
+        if(precoEvento < preco){
+          preco = precoEvento;
+        }
+      }
 
-      this->total_ingressos--;
+      for(Adulto *adulto : this->adultos){
+        if(adulto->get_id() == usuario_id){
+          if(adulto->get_saldo() < preco){
+            success = false;
+          }
+          else{
+            success = true;
+            adulto->set_saldo(preco);
+            nomeUsuario = adulto->get_nome();
+          }
+        }
+      }
+      for(Crianca *crianca : this->criancas){
+        if(crianca->get_id() == usuario_id){
+          if(crianca->get_saldo() < preco){
+            success = false;
+          }
+          else{
+            success = true;
+            crianca->set_saldo(preco);
+            nomeUsuario = crianca->get_nome();
+          }
+        }
+      }
+      for(Idoso *idoso : this->idosos){
+        if(idoso->get_id() == usuario_id){
+          if(idoso->get_saldo() < preco){
+            success = false;
+          }
+          else{
+            success = true;
+            idoso->set_saldo(preco);
+            nomeUsuario = idoso->get_nome();
+          }
+        }
+      }
+
+      int horario = evento->get_horarios()[horario_key];
+
+      if(success){
+        std::cout << "=> Compra efetuada com sucesso! Segue abaixo os detalhes:" << std::endl;
+        std::cout << "- Cliente: " << nomeUsuario << std::endl;
+        std::cout << "- Evento: " << evento->get_nome() << std::endl;
+        std::cout << "- Horario: " << horario << 'h' << std::endl;
+        std::cout << "- Preco: R$" << preco << ",00" << std::endl;
+        this->total_ingressos--;
+      }
+      else{
+        std::cout << "=> Seu saldo é insuficiente para realizar a compra do ingresso" << std::endl;
+      }
+
       break;
     }
   }

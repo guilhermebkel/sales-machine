@@ -28,3 +28,7 @@ std::string Adulto::get_nome(){
 float Adulto::get_saldo(){
 	return _saldo;
 }
+
+void Adulto::set_saldo(float quantia){
+	this->_saldo -= quantia;
+}

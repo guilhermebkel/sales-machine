@@ -16,6 +16,7 @@ class Crianca: public Usuario {
 		std::string get_nome();
 		int get_id();
 		float get_saldo();
+		void set_saldo(float quantia);
 };
 
 #endif

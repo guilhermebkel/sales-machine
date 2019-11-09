@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <map>
 
 #include "users/usuario.h"
 #include "users/crianca.h"
@@ -14,6 +15,7 @@
 #include "events/show.h"
 #include "events/cinema.h"
 #include "events/teatro_fantoche.h"
+#include "events/evento.h"
 
 #include "machines/maquina_fantoche.h"
 
@@ -27,7 +29,7 @@ int main(){
 	Adulto* usuarioResponsavel = nullptr;
 
 	std::string eventoId, eventoNome, eventoPublico, eventoTipo, eventoResponsavel_id, eventoNumTipos;
-	int eventoCapacidade, eventoPreco, eventoHoraInicio, eventoHoraFim, eventoAberturaPortoes, eventoHorario, eventoQuota_idoso, eventoDuracao;
+	int eventoHoraInicio, eventoHoraFim, eventoAberturaPortoes, eventoQuota_idoso, eventoDuracao;
 	std::vector<int> eventoCapacidades, eventoPrecos, eventoHorariosInicio;
 	std::vector<std::string> eventoArtistas;
 	Usuario* eventoResponsavel = nullptr;
@@ -41,32 +43,32 @@ int main(){
 	std::vector<Cinema*> cinemas;
 	std::vector<TeatroFantoche*> teatros;
 
-	std::ifstream usuarios("database/usuarios.csv");
+	std::ifstream usuariosDatabase("database/usuarios.csv");
 
-	while(usuarios.good()){
+	while(usuariosDatabase.good()){
 		
-		std::getline(usuarios, usuarioId, ',');
-		std::getline(usuarios, usuarioTipo, ',');
-		std::getline(usuarios, usuarioNome, ',');
-		std::getline(usuarios, usuarioIdade, ',');
+		std::getline(usuariosDatabase, usuarioId, ',');
+		std::getline(usuariosDatabase, usuarioTipo, ',');
+		std::getline(usuariosDatabase, usuarioNome, ',');
+		std::getline(usuariosDatabase, usuarioIdade, ',');
 
 		// Verifica o tipo da linha atual
 		// para decidir quando ler o último termo como '\n'
 		if(!usuarioTipo.compare("adulto")){
-			std::getline(usuarios, usuarioSaldo, '\n');
+			std::getline(usuariosDatabase, usuarioSaldo, '\n');
 			usuarioResponsavel_id = "NULL";
 
 			adultos.push_back(new Adulto(std::stoi(usuarioId), usuarioNome, std::stoi(usuarioIdade), std::stof(usuarioSaldo), criancas));
 		}
 		else if(!usuarioTipo.compare("idoso")){
-			std::getline(usuarios, usuarioSaldo, '\n');
+			std::getline(usuariosDatabase, usuarioSaldo, '\n');
 			usuarioResponsavel_id = "NULL";
 
 			idosos.push_back(new Idoso(std::stoi(usuarioId), usuarioNome, std::stoi(usuarioIdade), std::stof(usuarioSaldo), criancas));
 		}
 		else if(!usuarioTipo.compare("crianca")){
-			std::getline(usuarios, usuarioSaldo, ',');
-			std::getline(usuarios, usuarioResponsavel_id, '\n');
+			std::getline(usuariosDatabase, usuarioSaldo, ',');
+			std::getline(usuariosDatabase, usuarioResponsavel_id, '\n');
 
 			// Associa o adulto respoonsavel com
 			// seu filho.
@@ -87,7 +89,7 @@ int main(){
 		}
 		usuarioResponsavel = nullptr;
 	}
-	usuarios.close();
+	usuariosDatabase.close();
 
 	// Faz as associações dos dependentes de cada adulto
 	for(Adulto* adulto : adultos){
@@ -113,25 +115,25 @@ int main(){
 		}
 	}
 
-	std::ifstream eventos("database/eventos.csv");
+	std::ifstream eventosDatabase("database/eventos.csv");
 
-	while(eventos.good()){
+	while(eventosDatabase.good()){
 
-		std::getline(eventos, eventoId, ',');
-		std::getline(eventos, eventoPublico, ',');
+		std::getline(eventosDatabase, eventoId, ',');
+		std::getline(eventosDatabase, eventoPublico, ',');
 
 		if(!eventoPublico.compare("cinema")){
 			eventoTipo = eventoPublico;
 		}
 		else{
-			std::getline(eventos, eventoTipo, ',');
+			std::getline(eventosDatabase, eventoTipo, ',');
 		}
 
-		std::getline(eventos, eventoNome, ',');
-		std::getline(eventos, eventoResponsavel_id, ',');
-		std::getline(eventos, eventoNumTipos, ',');
+		std::getline(eventosDatabase, eventoNome, ',');
+		std::getline(eventosDatabase, eventoResponsavel_id, ',');
+		std::getline(eventosDatabase, eventoNumTipos, ',');
 
-		std::getline(eventos, linha);
+		std::getline(eventosDatabase, linha);
 		stream_string = std::istringstream(linha);
 		contador = 0;
 		while(std::getline(stream_string, termo, ',')){
@@ -208,13 +210,13 @@ int main(){
 		eventoResponsavel = nullptr;
 		eventoQuota_idoso = 0;
 	}
-	eventos.close();
+	eventosDatabase.close();
 
-	MaquinaFantoche maquina(teatros);
-	maquina.show_eventos();
-	maquina.show_horarios(5);
-	maquina.buy_ingresso(5, 0);
-
+	MaquinaFantoche maquina(teatros, adultos, criancas, idosos);
+	// maquina.show_eventos();
+	// maquina.show_horarios(5);
+	maquina.buy_ingresso(5, 1, 1);
+	
 	// Desaloca todos os ponteiros dinâmicos utilizados
 	for (Crianca *crianca : criancas){
 		delete crianca;
