@@ -3,8 +3,15 @@
 
 #include "machines/maquina_fantoche.h"
 
-MaquinaFantoche::MaquinaFantoche(std::vector<TeatroFantoche*> eventos, std::vector<Usuario*> usuarios){
-  this->eventos = eventos;
+MaquinaFantoche::MaquinaFantoche(std::vector<Evento*> eventos, std::vector<Usuario*> usuarios){
+  for(Evento* evento: eventos){
+    TeatroFantoche* teatro = dynamic_cast<TeatroFantoche*>(evento);
+
+    if(teatro != nullptr){
+      this->eventos.push_back(teatro);
+    }
+  }
+  
   this->usuarios = usuarios;
 }
 
