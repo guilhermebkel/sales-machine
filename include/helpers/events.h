@@ -13,6 +13,7 @@
 #include "usuarios/crianca.h"
 #include "usuarios/adulto.h"
 #include "usuarios/idoso.h"
+#include "usuarios/usuario.h"
 
 std::vector<Evento*> setup_eventos(std::vector<Usuario*> usuarios){
 	std::string linha, termo;
