@@ -63,25 +63,18 @@ void MaquinaFantoche::buy_ingresso(int evento_id, int horario_key, int usuario_i
       bool success;
 
       for(int i=0; i<evento->get_precos().size(); i++){
-        if(evento->get_precos()[i] < preco){
-          preco = evento->get_precos()[i];
-        }
-        if(i+1 == evento->get_precos().size()){
-          if(evento->get_capacidades()[i] <= 0){
-            evento->get_capacidades().erase(evento->get_capacidades().begin()-i);
-            evento->get_precos().erase(evento->get_precos().begin()-i);
-            i = 0;
-            preco = 99999;
-          }
-          else {
-            lote = i;
-          }
-        }
-        if(evento->get_precos().size() == 0){
-          success = false;
+        if(evento->get_capacidades()[i] == 0){
+          // Remove lote que ja esgotou
+          evento->remove_lote(i);
+        } else if(evento->get_capacidades().size() == 0){
           std::cout << "=> Infelizmente nao temos ingressos disponiveis para esse evento" << std::endl;
+        } else if(evento->get_precos()[i] < preco && evento->get_capacidades()[i] > 0){
+          preco = evento->get_precos()[i];
+          lote = i;
         }
       }
+      // Decrementa a capacidade do lote ja que um ingresso foi comprado
+      evento->decrement_capacidade(lote, 1);
 
       for(Usuario *usuario : this->usuarios){
         if(usuario->get_id() == usuario_id){

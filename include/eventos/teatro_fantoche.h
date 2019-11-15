@@ -18,6 +18,8 @@ class TeatroFantoche: public EventoInfantil {
 		int get_id();
 		std::string get_nome();
 		std::vector<int> get_horarios();
+		void decrement_capacidade(int lote, int quantidade);
+		void remove_lote(int lote);
 };
 
 #endif

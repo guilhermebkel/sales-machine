@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
+#include <map>
 
 #include "eventos/evento.h"
 #include "eventos/teatro_fantoche.h"
@@ -12,7 +14,6 @@ class MaquinaFantoche {
   private:
     std::vector<TeatroFantoche*> eventos;
     std::vector<Usuario*> usuarios;
-    int total_ingressos = 10;
 
   public:
     MaquinaFantoche(std::vector<Evento*> eventos, std::vector<Usuario*> usuarios);

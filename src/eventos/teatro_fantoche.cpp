@@ -28,3 +28,11 @@ std::string TeatroFantoche::get_nome(){
 std::vector<int> TeatroFantoche::get_horarios(){
 	return _horarios;
 }
+
+void TeatroFantoche::decrement_capacidade(int lote, int quantidade){
+	this->get_capacidades()[lote] -= quantidade;
+}
+	
+void TeatroFantoche::remove_lote(int lote){
+	this->get_capacidades().erase(this->get_capacidades().begin()+lote);
+}
