@@ -2,7 +2,7 @@
 #include <string>
 
 #include "maquinas/maquina_fantoche.h"
-#include "helpers/conversion.h"
+#include "helpers/eventos/conversion.h"
 
 MaquinaFantoche::MaquinaFantoche(std::vector<Evento*> eventos, std::vector<Usuario*> usuarios){
   this->eventos = get_teatros(eventos);

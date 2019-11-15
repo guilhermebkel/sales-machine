@@ -4,8 +4,8 @@
 #include "eventos/evento.h"
 #include "maquinas/maquina_fantoche.h"
 
-#include "helpers/users.h"
-#include "helpers/events.h"
+#include "helpers/usuarios/setup.h"
+#include "helpers/eventos/setup.h"
 
 int main(){
 	std::vector<Usuario*> usuarios;
