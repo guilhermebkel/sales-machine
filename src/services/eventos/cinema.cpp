@@ -1,4 +1,4 @@
-#include "events/cinema.h"
+#include "eventos/cinema.h"
 
 Cinema::Cinema(int id, std::string nome, Usuario* responsavel, std::vector<int> capacidades, std::vector<int> precos, std::vector<int> horarios, int duracao):
 	Evento(id, nome, responsavel, capacidades, precos){

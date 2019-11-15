@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "events/evento.h"
+#include "eventos/evento.h"
 
 class Cinema: public Evento {
 	private:

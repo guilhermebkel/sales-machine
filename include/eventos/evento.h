@@ -5,7 +5,7 @@
 #include "iostream"
 #include "vector"
 
-#include "users/usuario.h"
+#include "usuarios/usuario.h"
 
 class Evento {
 	public:

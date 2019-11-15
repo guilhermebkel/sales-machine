@@ -4,9 +4,9 @@
 #include <iostream>
 #include <vector>
 
-#include "events/evento.h"
-#include "events/teatro_fantoche.h"
-#include "users/usuario.h"
+#include "eventos/evento.h"
+#include "eventos/teatro_fantoche.h"
+#include "usuarios/usuario.h"
 
 class MaquinaFantoche {
   private:

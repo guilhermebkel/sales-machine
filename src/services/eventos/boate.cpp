@@ -1,4 +1,4 @@
-#include "events/boate.h"
+#include "eventos/boate.h"
 
 Boate::Boate(int id, std::string nome, Usuario* responsavel, std::vector<int> capacidades, std::vector<int> precos, int quota_idoso, int horaInicio, int horaFim):
 	EventoAdulto(id, nome, responsavel, capacidades, precos, quota_idoso){

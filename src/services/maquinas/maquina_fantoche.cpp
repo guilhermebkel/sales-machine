@@ -1,7 +1,7 @@
 #include <iomanip>
 #include <string>
 
-#include "machines/maquina_fantoche.h"
+#include "maquinas/maquina_fantoche.h"
 
 MaquinaFantoche::MaquinaFantoche(std::vector<Evento*> eventos, std::vector<Usuario*> usuarios){
   for(Evento* evento: eventos){

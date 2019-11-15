@@ -2,29 +2,29 @@ CC := g++
 SRCDIR := src
 BUILDDIR := build
 TARGET := main
-CFLAGS := -g -O3 -std=c++11 -I include/ -I third_party/
+CFLAGS := -g -O3 -std=c++11 -I include/ -I third_party/ -I src/
 
 all: main
 
-events:
-	@mkdir build/events/
-	$(CC) $(CFLAGS) -c src/services/events/boate.cpp -o build/events/boate.o
-	$(CC) $(CFLAGS) -c src/services/events/show.cpp -o build/events/show.o
-	$(CC) $(CFLAGS) -c src/services/events/teatro_fantoche.cpp -o build/events/teatro_fantoche.o
-	$(CC) $(CFLAGS) -c src/services/events/cinema.cpp -o build/events/cinema.o
+eventos:
+	@mkdir build/eventos/
+	$(CC) $(CFLAGS) -c src/services/eventos/boate.cpp -o build/eventos/boate.o
+	$(CC) $(CFLAGS) -c src/services/eventos/show.cpp -o build/eventos/show.o
+	$(CC) $(CFLAGS) -c src/services/eventos/teatro_fantoche.cpp -o build/eventos/teatro_fantoche.o
+	$(CC) $(CFLAGS) -c src/services/eventos/cinema.cpp -o build/eventos/cinema.o
 
-users:
-	@mkdir build/users/
-	$(CC) $(CFLAGS) -c src/services/users/adulto.cpp -o build/users/adulto.o
-	$(CC) $(CFLAGS) -c src/services/users/crianca.cpp -o build/users/crianca.o
-	$(CC) $(CFLAGS) -c src/services/users/idoso.cpp -o build/users/idoso.o
+usuarios:
+	@mkdir build/usuarios/
+	$(CC) $(CFLAGS) -c src/services/usuarios/adulto.cpp -o build/usuarios/adulto.o
+	$(CC) $(CFLAGS) -c src/services/usuarios/crianca.cpp -o build/usuarios/crianca.o
+	$(CC) $(CFLAGS) -c src/services/usuarios/idoso.cpp -o build/usuarios/idoso.o
 
-machines:
-	@mkdir build/machines/
-	$(CC) $(CFLAGS) -c src/services/machines/maquina_fantoche.cpp -o build/machines/maquina_fantoche.o
+maquinas:
+	@mkdir build/maquinas/
+	$(CC) $(CFLAGS) -c src/services/maquinas/maquina_fantoche.cpp -o build/maquinas/maquina_fantoche.o
 
-main: clean events users machines
-	$(CC) $(CFLAGS) build/events/*.o build/users/*.o build/machines/*.o program/main.cpp -o main
+main: clean eventos usuarios maquinas
+	$(CC) $(CFLAGS) build/eventos/*.o build/usuarios/*.o build/maquinas/*.o program/main.cpp -o main
 
 clean:
 	$(RM) -r $(BUILDDIR)/* $(TARGET)

@@ -1,7 +1,7 @@
 #ifndef CRIANCA_H
 #define CRIANCA_H
 
-#include "users/usuario.h"
+#include "usuarios/usuario.h"
 
 class Adulto;
 

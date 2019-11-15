@@ -1,7 +1,7 @@
 #ifndef EVENTO_INFANTIL_H
 #define EVENTO_INFANTIL_H
 
-#include "events/evento.h"
+#include "eventos/evento.h"
 
 class EventoInfantil: public Evento {
 	public:

@@ -1,7 +1,7 @@
 #ifndef IDOSO_H
 #define IDOSO_H
 
-#include "users/adulto.h"
+#include "usuarios/adulto.h"
 
 class Idoso: public Adulto {
 	public:

@@ -1,4 +1,4 @@
-#include "users/adulto.h"
+#include "usuarios/adulto.h"
 
 Adulto::Adulto(int id, std::string nome, int idade, float saldo):
 	Usuario(id, nome, idade, saldo){
