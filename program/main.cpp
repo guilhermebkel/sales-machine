@@ -16,8 +16,8 @@ int main(){
 
 	MaquinaFantoche maquina(eventos, usuarios);
 	// maquina.show_eventos();
-	// maquina.show_horarios(5);
-	maquina.buy_ingresso(5, 1, 1);
+	maquina.show_horarios(5);
+	// maquina.buy_ingresso(5, 1, 1, 150);
 	
 	// Desaloca todos os ponteiros dinâmicos utilizados
 	deallocate_usuarios(usuarios);

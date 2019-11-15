@@ -4,6 +4,11 @@
 #include "maquinas/maquina_fantoche.h"
 #include "helpers/eventos/conversion.h"
 
+#include "exceptions/no_tickets.h"
+#include "exceptions/not_enough_funds.h"
+#include "exceptions/not_enough_tickets.h"
+#include "exceptions/invalid_id.h"
+
 MaquinaFantoche::MaquinaFantoche(std::vector<Evento*> eventos, std::vector<Usuario*> usuarios){
   this->eventos = get_teatros(eventos);
   this->usuarios = usuarios;
@@ -33,6 +38,8 @@ void MaquinaFantoche::show_eventos(){
 }
 
 void MaquinaFantoche::show_horarios(int evento_id){
+  bool success = false;
+
   std::cout << "==================" << std::endl;
   std::cout << "| ID |  Horario  |" << std::endl;
   std::cout << "------------------" << std::endl;
@@ -48,12 +55,21 @@ void MaquinaFantoche::show_horarios(int evento_id){
         std::cout << '|' << std::endl;
         std::cout << "------------------" << std::endl;
       }
+      success = true;
       break;
     }
   }
+
+  if (!success) {
+    // Caso a tag 'success' estiver como falsa, significa que 
+    // nao encontrou um evento com o id escolhido
+    throw InvalidIdException();
+  }
 }
 
-void MaquinaFantoche::buy_ingresso(int evento_id, int horario_key, int usuario_id){
+void MaquinaFantoche::buy_ingresso(int evento_id, int horario_key, int usuario_id, int quantidade){
+  bool success = false;
+  
   for(TeatroFantoche* evento : this->eventos){
     std::cout << std::left;
     if(evento->get_id() == evento_id){
@@ -67,20 +83,30 @@ void MaquinaFantoche::buy_ingresso(int evento_id, int horario_key, int usuario_i
           // Remove lote que ja esgotou
           evento->remove_lote(i);
         } 
+        // Caso os ingressos estiverem esgotados
         if(evento->get_capacidades().size() == 0){
-          std::cout << "=> Infelizmente nao temos ingressos disponiveis para esse evento" << std::endl;
-        } else if(evento->get_precos()[i] < preco && evento->get_capacidades()[i] > 0){
+          throw NoTicketsException();
+
+        }
+        
+        if(evento->get_precos()[i] < preco && evento->get_capacidades()[i] > 0){
           preco = evento->get_precos()[i];
           lote = i;
         }
       }
+
+      // Caso o usuario quiser comprar mais ingressos do que existe
+      if(evento->get_capacidades()[lote] < quantidade){
+        throw NotEnoughTicketsException();
+      }
+
       // Decrementa a capacidade do lote ja que um ingresso foi comprado
-      evento->decrement_capacidade(lote, 1);
+      evento->decrement_capacidade(lote, quantidade);
 
       for(Usuario *usuario : this->usuarios){
         if(usuario->get_id() == usuario_id){
           if(usuario->get_saldo() < preco){
-            success = false;
+            throw NotEnoughFundsException();
           }
           else{
             success = true;
@@ -92,19 +118,20 @@ void MaquinaFantoche::buy_ingresso(int evento_id, int horario_key, int usuario_i
 
       int horario = evento->get_horarios()[horario_key];
 
-      if(success){
-        std::cout << "=> Compra efetuada com sucesso! Segue abaixo os detalhes:" << std::endl;
-        std::cout << "- Cliente: " << nomeUsuario << std::endl;
-        std::cout << "- Evento: " << evento->get_nome() << std::endl;
-        std::cout << "- Horario: " << horario << 'h' << std::endl;
-        std::cout << "- Preco: R$" << preco << ",00" << std::endl;
-        evento->get_capacidades()[lote]--;
-      }
-      else{
-        std::cout << "=> Seu saldo é insuficiente para realizar a compra do ingresso" << std::endl;
-      }
+      std::cout << "=> Compra efetuada com sucesso! Segue abaixo os detalhes:" << std::endl;
+      std::cout << "- Cliente: " << nomeUsuario << std::endl;
+      std::cout << "- Evento: " << evento->get_nome() << std::endl;
+      std::cout << "- Horario: " << horario << 'h' << std::endl;
+      std::cout << "- Preco: R$" << preco << ",00" << std::endl;
 
+      success = true;
       break;
     }
+  }
+
+  if (!success) {
+    // Caso a tag 'success' estiver como falsa, significa que 
+    // nao encontrou um evento com o id escolhido
+    throw InvalidIdException();
   }
 }
