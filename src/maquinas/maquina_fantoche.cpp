@@ -86,7 +86,6 @@ void MaquinaFantoche::buy_ingresso(int evento_id, int horario_key, int usuario_i
         // Caso os ingressos estiverem esgotados
         if(evento->get_capacidades().size() == 0){
           throw NoTicketsException();
-
         }
         
         if(evento->get_precos()[i] < preco && evento->get_capacidades()[i] > 0){
