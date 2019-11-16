@@ -1,12 +1,15 @@
 #include <iomanip>
 #include <string>
 
+#include "usuarios/crianca.h"
+
 #include "maquinas/maquina_show.h"
 
 #include "exceptions/no_tickets.h"
 #include "exceptions/not_enough_funds.h"
 #include "exceptions/not_enough_tickets.h"
 #include "exceptions/invalid_id.h"
+#include "exceptions/insufficient_permission.h"
 
 MaquinaShow::MaquinaShow(std::vector<Evento*> eventos, std::vector<Usuario*> usuarios){
   for(Evento* evento: eventos){
@@ -73,16 +76,13 @@ void MaquinaShow::buy_ingresso(int show_id, int usuario_id, int quantidade){
         }
       }
 
-      // Caso o usuario quiser comprar mais ingressos do que existe
-      if(show->get_capacidades()[lote] < quantidade){
-        throw NotEnoughTicketsException();
-      }
-
-      // Decrementa a capacidade do lote ja que um ingresso foi comprado
-      show->decrement_capacidade(lote, quantidade);
-
-      for(Usuario *usuario : this->usuarios){
+			for(Usuario *usuario : this->usuarios){
         if(usuario->get_id() == usuario_id){
+					Crianca* crianca = dynamic_cast<Crianca*>(usuario);
+					if(crianca != nullptr){
+						throw InsufficientPermissionException();
+					}
+
           if(usuario->get_saldo() < preco){
             throw NotEnoughFundsException();
           }
@@ -92,6 +92,14 @@ void MaquinaShow::buy_ingresso(int show_id, int usuario_id, int quantidade){
           }
         }
       }
+
+      // Caso o usuario quiser comprar mais ingressos do que existe
+      if(show->get_capacidades()[lote] < quantidade){
+        throw NotEnoughTicketsException();
+      }
+
+      // Decrementa a capacidade do lote ja que um ingresso foi comprado
+      show->decrement_capacidade(lote, quantidade);
 
       std::cout << "=> Compra efetuada com sucesso! Segue abaixo os detalhes:" << std::endl;
       std::cout << "- Cliente: " << nomeUsuario << std::endl;

@@ -103,15 +103,7 @@ void MaquinaCinema::buy_ingresso(int filme_id, int horario_key, int usuario_id, 
         }
       }
 
-      // Caso o usuario quiser comprar mais ingressos do que existe
-      if(filme->get_capacidades()[lote] < quantidade){
-        throw NotEnoughTicketsException();
-      }
-
-      // Decrementa a capacidade do lote ja que um ingresso foi comprado
-      filme->decrement_capacidade(lote, quantidade);
-
-      for(Usuario *usuario : this->usuarios){
+			for(Usuario *usuario : this->usuarios){
         if(usuario->get_id() == usuario_id){
           if(usuario->get_saldo() < preco){
             throw NotEnoughFundsException();
@@ -122,6 +114,14 @@ void MaquinaCinema::buy_ingresso(int filme_id, int horario_key, int usuario_id, 
           }
         }
       }
+
+      // Caso o usuario quiser comprar mais ingressos do que existe
+      if(filme->get_capacidades()[lote] < quantidade){
+        throw NotEnoughTicketsException();
+      }
+
+      // Decrementa a capacidade do lote ja que um ingresso foi comprado
+      filme->decrement_capacidade(lote, quantidade);
 
       int horario = filme->get_horarios()[horario_key];
 
