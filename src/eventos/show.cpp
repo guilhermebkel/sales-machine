@@ -29,3 +29,19 @@ std::vector<int> Show::get_capacidades(){
 Usuario* Show::get_responsavel(){
 	return _responsavel;
 }
+
+int Show::get_aberturaPortoes(){
+	return _aberturaPortoes;
+}
+
+std::vector<std::string> Show::get_artistas(){
+	return _artistas;
+}
+
+void Show::decrement_capacidade(int lote, int quantidade){
+	this->get_capacidades()[lote] -= quantidade;
+}
+	
+void Show::remove_lote(int lote){
+	this->get_capacidades().erase(this->get_capacidades().begin()+lote);
+}

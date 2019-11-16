@@ -20,6 +20,10 @@ class Show: public EventoAdulto {
 		std::vector<int> get_precos();
 		std::vector<int> get_capacidades();
 		Usuario* get_responsavel();
+		int get_aberturaPortoes();
+		std::vector<std::string> get_artistas();
+		void decrement_capacidade(int lote, int quantidade);
+		void remove_lote(int lote);
 };
 
 #endif

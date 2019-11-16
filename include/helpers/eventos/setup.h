@@ -75,7 +75,8 @@ std::vector<Evento*> setup_eventos(std::vector<Usuario*> usuarios){
 					eventoHorariosInicio.push_back(std::stoi(termo));
 				}
 				else if(eventoTipo == "show"){
-					if(contador*2 + 2 == std::stoi(eventoNumTipos) + 2){
+					std::cout << contador << '-' << termo << '=' << std::stoi(eventoNumTipos) << std::endl;
+					if(contador == std::stoi(eventoNumTipos)*2 + 1){
 						eventoAberturaPortoes = std::stoi(termo);
 					}
 					else{
