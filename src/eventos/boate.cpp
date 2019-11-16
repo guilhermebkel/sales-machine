@@ -29,3 +29,11 @@ std::vector<int> Boate::get_capacidades(){
 Usuario* Boate::get_responsavel(){
 	return _responsavel;
 }
+
+void Boate::decrement_capacidade(int lote, int quantidade){
+	this->get_capacidades()[lote] -= quantidade;
+}
+	
+void Boate::remove_lote(int lote){
+	this->get_capacidades().erase(this->get_capacidades().begin()+lote);
+}

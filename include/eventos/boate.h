@@ -19,6 +19,8 @@ class Boate: public EventoAdulto {
 		std::vector<int> get_precos();
 		std::vector<int> get_capacidades();
 		Usuario* get_responsavel();
+		void decrement_capacidade(int lote, int quantidade);
+		void remove_lote(int lote);
 };
 
 #endif

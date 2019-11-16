@@ -19,6 +19,8 @@ class Cinema: public Evento {
 		std::string get_nome();
 		std::vector<int> get_horarios();
 		int get_duracao();
+		void decrement_capacidade(int lote, int quantidade);
+		void remove_lote(int lote);
 };
 
 #endif

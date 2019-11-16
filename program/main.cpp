@@ -25,7 +25,9 @@ int main(){
 	// maquina_fantoche.buy_ingresso(5, 1, 1, 150);
 	
 	// [TESTE] - Máquina Cinema:
-	maquina_cinema.show_filmes();
+	// maquina_cinema.show_filmes();
+	// maquina_cinema.show_horarios(1);
+	// maquina_cinema.buy_ingresso(1, 1, 1, 150);
 	
 	// Desaloca todos os ponteiros dinâmicos utilizados
 	deallocate_usuarios(usuarios);
