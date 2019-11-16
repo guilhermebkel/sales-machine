@@ -1,55 +1,59 @@
 #include <iomanip>
 #include <string>
 
-#include "maquinas/maquina_fantoche.h"
+#include "maquinas/maquina_cinema.h"
 
 #include "exceptions/no_tickets.h"
 #include "exceptions/not_enough_funds.h"
 #include "exceptions/not_enough_tickets.h"
 #include "exceptions/invalid_id.h"
 
-MaquinaFantoche::MaquinaFantoche(std::vector<Evento*> eventos, std::vector<Usuario*> usuarios){
-  for(Evento* evento: eventos){
-    TeatroFantoche* teatro = dynamic_cast<TeatroFantoche*>(evento);
+MaquinaCinema::MaquinaCinema(std::vector<Evento*> eventos, std::vector<Usuario*> usuarios){
+	for(Evento* evento: eventos){
+    Cinema* filme = dynamic_cast<Cinema*>(evento);
 
-    if(teatro != nullptr){
-      this->eventos.push_back(teatro);
+    if(filme != nullptr){
+      this->filmes.push_back(filme);
     }
   }
-  
+	
   this->usuarios = usuarios;
 }
 
-void MaquinaFantoche::show_eventos(){
-  std::cout << "=========================================================================" << std::endl;
-  std::cout << "| ID |                   Nome                      |      Horarios      |" << std::endl;
-  std::cout << "-------------------------------------------------------------------------" << std::endl;
-  for(auto evento : this->eventos){
+void MaquinaCinema::show_filmes(){
+  std::cout << "=====================================================================================" << std::endl;
+  std::cout << "| ID |                   Nome                      |      Horarios      |  Duracao  |" << std::endl;
+  std::cout << "-------------------------------------------------------------------------------------" << std::endl;
+  for(Cinema* filme : this->filmes){
     std::cout << std::left;
-    std::cout << "| " << std::setw(2) << evento->get_id() << ' ';
-    std::cout << "| " << std::setw(43) << evento->get_nome() << " | ";
+    std::cout << "| " << std::setw(2) << filme->get_id() << ' ';
+    std::cout << "| " << std::setw(43) << filme->get_nome() << " | ";
 
     std::string horarios;
-    for(int i=0; i<evento->get_horarios().size(); i++){
-      horarios = horarios + std::to_string(evento->get_horarios()[i]) + 'h';
-      if(i != evento->get_horarios().size()-1){
+    for(int i=0; i<filme->get_horarios().size(); i++){
+      horarios = horarios + std::to_string(filme->get_horarios()[i]) + 'h';
+      if(i != filme->get_horarios().size()-1){
         // Caso não for o último horario do vector, adiciona uma vírgula no std::cout
         horarios = horarios + ", ";
       }
     }
     std::cout << std::setw(19) << horarios;
-    std::cout << '|' << std::endl;
-    std::cout << "-------------------------------------------------------------------------" << std::endl;
+    std::cout << "| ";
+
+		std::string duracao;
+		duracao = std::to_string(filme->get_duracao()) + 'h';
+		std::cout << std::setw(10) << duracao << '|' << std::endl;
+    std::cout << "-------------------------------------------------------------------------------------" << std::endl;
   }
 }
 
-void MaquinaFantoche::show_horarios(int evento_id){
+void MaquinaCinema::show_horarios(int evento_id){
   bool success = false;
 
   std::cout << "==================" << std::endl;
   std::cout << "| ID |  Horario  |" << std::endl;
   std::cout << "------------------" << std::endl;
-  for(TeatroFantoche* evento : this->eventos){
+  for(Cinema* evento : this->filmes){
     std::cout << std::left;
     if(evento->get_id() == evento_id){
       for(int i=0; i<evento->get_horarios().size(); i++){
@@ -73,10 +77,10 @@ void MaquinaFantoche::show_horarios(int evento_id){
   }
 }
 
-void MaquinaFantoche::buy_ingresso(int evento_id, int horario_key, int usuario_id, int quantidade){
+void MaquinaCinema::buy_ingresso(int evento_id, int horario_key, int usuario_id, int quantidade){
   bool success = false;
   
-  for(TeatroFantoche* evento : this->eventos){
+  for(Cinema* evento : this->filmes){
     std::cout << std::left;
     if(evento->get_id() == evento_id){
       int preco = 99999;
@@ -87,7 +91,7 @@ void MaquinaFantoche::buy_ingresso(int evento_id, int horario_key, int usuario_i
       for(int i=0; i<evento->get_precos().size(); i++){
         if(evento->get_capacidades()[i] == 0){
           // Remove lote que ja esgotou
-          evento->remove_lote(i);
+          // evento->remove_lote(i);
         } 
         // Caso os ingressos estiverem esgotados
         if(evento->get_capacidades().size() == 0){
@@ -106,7 +110,7 @@ void MaquinaFantoche::buy_ingresso(int evento_id, int horario_key, int usuario_i
       }
 
       // Decrementa a capacidade do lote ja que um ingresso foi comprado
-      evento->decrement_capacidade(lote, quantidade);
+      // evento->decrement_capacidade(lote, quantidade);
 
       for(Usuario *usuario : this->usuarios){
         if(usuario->get_id() == usuario_id){

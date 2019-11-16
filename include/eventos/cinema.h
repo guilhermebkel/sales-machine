@@ -17,6 +17,8 @@ class Cinema: public Evento {
 		Usuario* get_responsavel();
 		int get_id();
 		std::string get_nome();
+		std::vector<int> get_horarios();
+		int get_duracao();
 };
 
 #endif

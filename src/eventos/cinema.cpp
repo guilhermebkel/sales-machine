@@ -25,3 +25,11 @@ int Cinema::get_id(){
 std::string Cinema::get_nome(){
 	return _nome;
 }
+
+std::vector<int> Cinema::get_horarios(){
+	return _horarios;
+}
+
+int Cinema::get_duracao(){
+	return _duracao;
+}

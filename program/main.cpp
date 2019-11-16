@@ -2,7 +2,9 @@
 
 #include "usuarios/usuario.h"
 #include "eventos/evento.h"
+
 #include "maquinas/maquina_fantoche.h"
+#include "maquinas/maquina_cinema.h"
 
 #include "helpers/usuarios/setup.h"
 #include "helpers/eventos/setup.h"
@@ -14,10 +16,16 @@ int main(){
 	usuarios = setup_usuarios();
 	eventos = setup_eventos(usuarios);
 
-	MaquinaFantoche maquina(eventos, usuarios);
-	// maquina.show_eventos();
-	maquina.show_horarios(5);
-	// maquina.buy_ingresso(5, 1, 1, 150);
+	MaquinaFantoche maquina_fantoche(eventos, usuarios);
+	MaquinaCinema maquina_cinema(eventos, usuarios);
+
+	// [TESTE] - Máquina Fantoche:
+	// maquina_fantoche.show_eventos();
+	// maquina_fantoche.show_horarios(5);
+	// maquina_fantoche.buy_ingresso(5, 1, 1, 150);
+	
+	// [TESTE] - Máquina Cinema:
+	maquina_cinema.show_filmes();
 	
 	// Desaloca todos os ponteiros dinâmicos utilizados
 	deallocate_usuarios(usuarios);
