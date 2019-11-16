@@ -50,12 +50,15 @@ std::vector<Evento*> setup_eventos(std::vector<Usuario*> usuarios){
 		stream_string = std::istringstream(linha);
 		contador = 0;
 		while(std::getline(stream_string, termo, ',')){
+			// Salva as capacidades do evento
 			if(contador < std::stoi(eventoNumTipos)*2 && (contador%2 == 0)){
 				eventoCapacidades.push_back(std::stoi(termo));
 			}
+			// Salva os preços do eventos
 			else if(contador < std::stoi(eventoNumTipos)*2 && (contador%2 != 0)){
 				eventoPrecos.push_back(std::stoi(termo));
 			}
+			// Começa a salvar dados de acordo com o tipo do evento
 			else{
 				if(contador == std::stoi(eventoNumTipos)*2 && eventoPublico == "adulto"){
 					eventoQuota_idoso = std::stoi(termo);
@@ -80,7 +83,7 @@ std::vector<Evento*> setup_eventos(std::vector<Usuario*> usuarios){
 					}
 				}
 				else if(eventoTipo == "boate"){
-					if(contador*2 + 2 == std::stoi(eventoNumTipos) + 2){
+					if(contador%2 != 0){
 						eventoHoraInicio = std::stoi(termo);
 					}
 					else{

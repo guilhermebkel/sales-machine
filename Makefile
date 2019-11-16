@@ -23,6 +23,7 @@ maquinas:
 	@mkdir build/maquinas/
 	$(CC) $(CFLAGS) -c src/maquinas/maquina_fantoche.cpp -o build/maquinas/maquina_fantoche.o
 	$(CC) $(CFLAGS) -c src/maquinas/maquina_cinema.cpp -o build/maquinas/maquina_cinema.o
+	$(CC) $(CFLAGS) -c src/maquinas/maquina_boate.cpp -o build/maquinas/maquina_boate.o
 
 main: dir clean eventos usuarios maquinas
 	$(CC) $(CFLAGS) build/eventos/*.o build/usuarios/*.o build/maquinas/*.o program/main.cpp -o main

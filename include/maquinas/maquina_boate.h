@@ -12,14 +12,14 @@
 
 class MaquinaBoate {
   private:
-    std::vector<Boate*> eventos;
+    std::vector<Boate*> boates;
     std::vector<Usuario*> usuarios;
 
   public:
     MaquinaBoate(std::vector<Evento*> eventos, std::vector<Usuario*> usuarios);
-    void show_eventos();
+    void show_boates();
     void show_horarios(int evento_id);
-    void buy_ingresso(int evento_id, int horario_key, int usuario_id, int quantidade);
+    void buy_ingresso(int evento_id, int usuario_id, int quantidade);
 };
 
 #endif

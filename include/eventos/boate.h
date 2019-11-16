@@ -21,6 +21,8 @@ class Boate: public EventoAdulto {
 		Usuario* get_responsavel();
 		void decrement_capacidade(int lote, int quantidade);
 		void remove_lote(int lote);
+		int get_horaInicio();
+		int get_horaFim();
 };
 
 #endif

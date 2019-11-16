@@ -30,6 +30,14 @@ Usuario* Boate::get_responsavel(){
 	return _responsavel;
 }
 
+int Boate::get_horaInicio(){
+	return _horaInicio;
+}
+
+int Boate::get_horaFim(){
+	return _horaFim;
+}
+
 void Boate::decrement_capacidade(int lote, int quantidade){
 	this->get_capacidades()[lote] -= quantidade;
 }
