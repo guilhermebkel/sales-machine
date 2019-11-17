@@ -88,8 +88,9 @@ void MaquinaFantoche::buy_ingresso(int teatro_id, int horario_key, int usuario_i
         throw NoTicketsException();
       }
 
+      // Iteração para pegar o lote de menor valor
       for(int i=0; i<teatro->get_precos().size(); i++){   
-        if(teatro->get_precos()[i] < preco && teatro->get_capacidades()[i] > 0){
+        if(teatro->get_precos()[i] < preco){
           preco = teatro->get_precos()[i];
           lote = i;
         }

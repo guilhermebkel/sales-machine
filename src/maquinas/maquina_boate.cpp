@@ -59,8 +59,9 @@ void MaquinaBoate::buy_ingresso(int boate_id, int usuario_id, int quantidade){
         throw NoTicketsException();
       }
 
+      // Iteração para pegar o lote de menor valor
       for(int i=0; i<boate->get_precos().size(); i++){ 
-        if(boate->get_precos()[i] < preco && boate->get_capacidades()[i] > 0){
+        if(boate->get_precos()[i] < preco){
           preco = boate->get_precos()[i];
           lote = i;
         }

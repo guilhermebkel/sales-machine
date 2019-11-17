@@ -92,8 +92,9 @@ void MaquinaCinema::buy_ingresso(int filme_id, int horario_key, int usuario_id, 
         throw NoTicketsException();
       }
 
+      // Iteração para pegar o lote de menor valor
       for(int i=0; i<filme->get_precos().size(); i++){
-        if(filme->get_precos()[i] < preco && filme->get_capacidades()[i] > 0){
+        if(filme->get_precos()[i] < preco){
           preco = filme->get_precos()[i];
           lote = i;
         }

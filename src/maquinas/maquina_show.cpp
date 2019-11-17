@@ -65,8 +65,9 @@ void MaquinaShow::buy_ingresso(int show_id, int usuario_id, int quantidade){
         throw NoTicketsException();
       }
 
+      // Iteração para pegar o lote de menor valor
       for(int i=0; i<show->get_precos().size(); i++){  
-        if(show->get_precos()[i] < preco && show->get_capacidades()[i] > 0){
+        if(show->get_precos()[i] < preco){
           preco = show->get_precos()[i];
           lote = i;
         }
