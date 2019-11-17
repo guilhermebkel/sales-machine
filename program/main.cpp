@@ -24,7 +24,7 @@ int main(){
 	MaquinaShow maquina_show(eventos, usuarios);
 
 	// [TESTE] - Máquina Fantoche:
-	// maquina_fantoche.show_eventos();
+	// maquina_fantoche.show_teatros();
 	// maquina_fantoche.show_horarios(5);
 	// maquina_fantoche.buy_ingresso(5, 1, 1, 150);
 	
