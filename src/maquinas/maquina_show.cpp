@@ -65,11 +65,7 @@ void MaquinaShow::buy_ingresso(int show_id, int usuario_id, int quantidade){
         throw NoTicketsException();
       }
 
-      for(int i=0; i<show->get_precos().size(); i++){
-        if(show->get_capacidades()[i] == 0){
-          // Remove lote que ja esgotou
-          show->remove_lote(i);
-        }  
+      for(int i=0; i<show->get_precos().size(); i++){  
         if(show->get_precos()[i] < preco && show->get_capacidades()[i] > 0){
           preco = show->get_precos()[i];
           lote = i;
@@ -98,7 +94,14 @@ void MaquinaShow::buy_ingresso(int show_id, int usuario_id, int quantidade){
       }
 
       // Decrementa a capacidade do lote ja que um ingresso foi comprado
+      std::cout << show->get_capacidades()[lote] << std::endl;
       show->decrement_capacidade(lote, quantidade);
+      std::cout << show->get_capacidades()[lote] << std::endl;
+
+      // Remove lote que ja esgotou
+      if(show->get_capacidades()[lote] == 0){
+        show->remove_lote(lote);
+      }
 
       std::cout << "=> Compra efetuada com sucesso! Segue abaixo os detalhes:" << std::endl;
       std::cout << "- Cliente: " << nomeUsuario << std::endl;

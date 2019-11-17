@@ -59,11 +59,7 @@ void MaquinaBoate::buy_ingresso(int boate_id, int usuario_id, int quantidade){
         throw NoTicketsException();
       }
 
-      for(int i=0; i<boate->get_precos().size(); i++){
-        if(boate->get_capacidades()[i] == 0){
-          // Remove lote que ja esgotou
-          boate->remove_lote(i);
-        } 
+      for(int i=0; i<boate->get_precos().size(); i++){ 
         if(boate->get_precos()[i] < preco && boate->get_capacidades()[i] > 0){
           preco = boate->get_precos()[i];
           lote = i;
@@ -93,6 +89,11 @@ void MaquinaBoate::buy_ingresso(int boate_id, int usuario_id, int quantidade){
 
       // Decrementa a capacidade do lote ja que um ingresso foi comprado
       boate->decrement_capacidade(lote, quantidade);
+
+      // Remove lote que ja esgotou
+      if(boate->get_capacidades()[lote] == 0){
+        boate->remove_lote(lote);
+      }
 
       std::cout << "=> Compra efetuada com sucesso! Segue abaixo os detalhes:" << std::endl;
       std::cout << "- Cliente: " << nomeUsuario << std::endl;

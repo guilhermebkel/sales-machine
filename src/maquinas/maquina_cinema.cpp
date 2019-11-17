@@ -93,10 +93,6 @@ void MaquinaCinema::buy_ingresso(int filme_id, int horario_key, int usuario_id, 
       }
 
       for(int i=0; i<filme->get_precos().size(); i++){
-        if(filme->get_capacidades()[i] == 0){
-          // Remove lote que ja esgotou
-          filme->remove_lote(i);
-        } 
         if(filme->get_precos()[i] < preco && filme->get_capacidades()[i] > 0){
           preco = filme->get_precos()[i];
           lote = i;
@@ -122,6 +118,11 @@ void MaquinaCinema::buy_ingresso(int filme_id, int horario_key, int usuario_id, 
 
       // Decrementa a capacidade do lote ja que um ingresso foi comprado
       filme->decrement_capacidade(lote, quantidade);
+
+      // Remove lote que ja esgotou
+      if(filme->get_capacidades()[lote] == 0){
+        filme->remove_lote(lote);
+      } 
 
       int horario = filme->get_horarios()[horario_key];
 

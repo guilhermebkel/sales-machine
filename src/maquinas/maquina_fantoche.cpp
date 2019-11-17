@@ -88,11 +88,7 @@ void MaquinaFantoche::buy_ingresso(int teatro_id, int horario_key, int usuario_i
         throw NoTicketsException();
       }
 
-      for(int i=0; i<teatro->get_precos().size(); i++){
-        if(teatro->get_capacidades()[i] == 0){
-          // Remove lote que ja esgotou
-          teatro->remove_lote(i);
-        }    
+      for(int i=0; i<teatro->get_precos().size(); i++){   
         if(teatro->get_precos()[i] < preco && teatro->get_capacidades()[i] > 0){
           preco = teatro->get_precos()[i];
           lote = i;
@@ -118,6 +114,11 @@ void MaquinaFantoche::buy_ingresso(int teatro_id, int horario_key, int usuario_i
 
       // Decrementa a capacidade do lote ja que um ingresso foi comprado
       teatro->decrement_capacidade(lote, quantidade);
+
+      // Remove lote que ja esgotou
+      if(teatro->get_capacidades()[lote] == 0){
+        teatro->remove_lote(lote);
+      } 
 
       int horario = teatro->get_horarios()[horario_key];
 
