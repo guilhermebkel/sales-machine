@@ -39,9 +39,10 @@ int Boate::get_horaFim(){
 }
 
 void Boate::decrement_capacidade(int lote, int quantidade){
-	this->get_capacidades()[lote] -= quantidade;
+	_capacidades[lote] -= quantidade;
 }
 	
 void Boate::remove_lote(int lote){
-	this->get_capacidades().erase(this->get_capacidades().begin()+lote);
+	_capacidades.erase(_capacidades.begin()+lote);
+	_precos.erase(_precos.begin()+lote);
 }

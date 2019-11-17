@@ -95,9 +95,7 @@ void MaquinaShow::buy_ingresso(int show_id, int usuario_id, int quantidade){
       }
 
       // Decrementa a capacidade do lote ja que um ingresso foi comprado
-      std::cout << show->get_capacidades()[lote] << std::endl;
       show->decrement_capacidade(lote, quantidade);
-      std::cout << show->get_capacidades()[lote] << std::endl;
 
       // Remove lote que ja esgotou
       if(show->get_capacidades()[lote] == 0){

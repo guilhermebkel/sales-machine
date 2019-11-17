@@ -35,11 +35,11 @@ int main(){
 
 	// [TESTE] - Máquina Boate:
 	// maquina_boate.show_boates();
-	// maquina_boate.buy_ingresso(4, 1, 2);
+	// maquina_boate.buy_ingresso(4, 1, 50);
 
 	// [TESTE] - Máquina Show:
-	maquina_show.list_shows();
-	maquina_show.buy_ingresso(7, 2, 20);
+	// maquina_show.list_shows();
+	// maquina_show.buy_ingresso(7, 2, 20);
 	
 	// Desaloca todos os ponteiros dinâmicos utilizados
 	deallocate_usuarios(usuarios);
