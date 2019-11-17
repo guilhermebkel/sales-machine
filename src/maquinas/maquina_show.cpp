@@ -60,16 +60,16 @@ void MaquinaShow::buy_ingresso(int show_id, int usuario_id, int quantidade){
       int lote;
       std::string nomeUsuario;
 
+      // Caso os ingressos estiverem esgotados
+      if(show->get_capacidades().size() == 0){
+        throw NoTicketsException();
+      }
+
       for(int i=0; i<show->get_precos().size(); i++){
         if(show->get_capacidades()[i] == 0){
           // Remove lote que ja esgotou
           show->remove_lote(i);
-        } 
-        // Caso os ingressos estiverem esgotados
-        if(show->get_capacidades().size() == 0){
-          throw NoTicketsException();
-        }
-        
+        }  
         if(show->get_precos()[i] < preco && show->get_capacidades()[i] > 0){
           preco = show->get_precos()[i];
           lote = i;
@@ -82,8 +82,7 @@ void MaquinaShow::buy_ingresso(int show_id, int usuario_id, int quantidade){
 					if(crianca != nullptr){
 						throw InsufficientPermissionException();
 					}
-
-          if(usuario->get_saldo() < preco){
+          else if(usuario->get_saldo() < preco){
             throw NotEnoughFundsException();
           }
           else{

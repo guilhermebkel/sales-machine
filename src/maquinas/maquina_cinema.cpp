@@ -87,16 +87,16 @@ void MaquinaCinema::buy_ingresso(int filme_id, int horario_key, int usuario_id, 
       int lote;
       std::string nomeUsuario;
 
+      // Caso os ingressos estiverem esgotados
+      if(filme->get_capacidades().size() == 0){
+        throw NoTicketsException();
+      }
+
       for(int i=0; i<filme->get_precos().size(); i++){
         if(filme->get_capacidades()[i] == 0){
           // Remove lote que ja esgotou
           filme->remove_lote(i);
         } 
-        // Caso os ingressos estiverem esgotados
-        if(filme->get_capacidades().size() == 0){
-          throw NoTicketsException();
-        }
-        
         if(filme->get_precos()[i] < preco && filme->get_capacidades()[i] > 0){
           preco = filme->get_precos()[i];
           lote = i;

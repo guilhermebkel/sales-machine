@@ -54,16 +54,16 @@ void MaquinaBoate::buy_ingresso(int boate_id, int usuario_id, int quantidade){
       int lote;
       std::string nomeUsuario;
 
+      // Caso os ingressos estiverem esgotados
+      if(boate->get_capacidades().size() == 0){
+        throw NoTicketsException();
+      }
+
       for(int i=0; i<boate->get_precos().size(); i++){
         if(boate->get_capacidades()[i] == 0){
           // Remove lote que ja esgotou
           boate->remove_lote(i);
         } 
-        // Caso os ingressos estiverem esgotados
-        if(boate->get_capacidades().size() == 0){
-          throw NoTicketsException();
-        }
-        
         if(boate->get_precos()[i] < preco && boate->get_capacidades()[i] > 0){
           preco = boate->get_precos()[i];
           lote = i;
@@ -76,8 +76,7 @@ void MaquinaBoate::buy_ingresso(int boate_id, int usuario_id, int quantidade){
 					if(crianca != nullptr){
 						throw InsufficientPermissionException();
 					}
-
-          if(usuario->get_saldo() < preco){
+          else if(usuario->get_saldo() < preco){
             throw NotEnoughFundsException();
           }
           else{
