@@ -9,14 +9,19 @@
 #include "maquinas/maquina_show.h"
 
 #include "helpers/usuarios/setup.h"
+#include "helpers/usuarios/list.h"
 #include "helpers/eventos/setup.h"
 
 int main(){
 	std::vector<Usuario*> usuarios;
 	std::vector<Evento*> eventos;
 
+	// [TESTE] - Carregar usuários e eventos
 	usuarios = setup_usuarios();
 	eventos = setup_eventos(usuarios);
+
+	// [TESTE] - Listar todos os usuários
+	// list_usuarios(usuarios);
 
 	MaquinaFantoche maquina_fantoche(eventos, usuarios);
 	MaquinaCinema maquina_cinema(eventos, usuarios);
