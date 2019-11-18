@@ -89,7 +89,6 @@ void MaquinaBoate::buy_ingresso(int boate_id, int usuario_id, int quantidade){
     throw InvalidIdException();
   }
 
-  
   if(crianca != nullptr){
     throw InsufficientPermissionException();
   }
