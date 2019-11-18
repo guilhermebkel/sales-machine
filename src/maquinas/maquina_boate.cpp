@@ -45,71 +45,78 @@ void MaquinaBoate::show_boates(){
 }
 
 void MaquinaBoate::buy_ingresso(int boate_id, int usuario_id, int quantidade){
-  bool success = false;
+  int preco = 99999, lote;
+  std::string nome_comprador;
+  Usuario* comprador = nullptr;
+  Boate* boate_selecionada = nullptr;
+  Crianca* crianca = nullptr;
   
   for(Boate* boate : this->boates){
-    std::cout << std::left;
     if(boate->get_id() == boate_id){
-      int preco = 99999;
-      int lote;
-      std::string nomeUsuario;
-
-      // Caso os ingressos estiverem esgotados
-      if(boate->get_capacidades().size() == 0){
-        throw NoTicketsException();
-      }
-
-      // Iteração para pegar o lote de menor valor
-      for(int i=0; i<boate->get_precos().size(); i++){ 
-        if(boate->get_precos()[i] < preco){
-          preco = boate->get_precos()[i];
-          lote = i;
-        }
-      }
-
-			for(Usuario *usuario : this->usuarios){
-        if(usuario->get_id() == usuario_id){
-					Crianca* crianca = dynamic_cast<Crianca*>(usuario);
-					if(crianca != nullptr){
-						throw InsufficientPermissionException();
-					}
-          else if(usuario->get_saldo() < preco){
-            throw NotEnoughFundsException();
-          }
-          else{
-            usuario->set_saldo(preco);
-            nomeUsuario = usuario->get_nome();
-          }
-        }
-      }
-
-      // Caso o usuario quiser comprar mais ingressos do que existe
-      if(boate->get_capacidades()[lote] < quantidade){
-        throw NotEnoughTicketsException();
-      }
-
-      // Decrementa a capacidade do lote ja que um ingresso foi comprado
-      boate->decrement_capacidade(lote, quantidade);
-
-      // Remove lote que ja esgotou
-      if(boate->get_capacidades()[lote] == 0){
-        boate->remove_lote(lote);
-      }
-
-      std::cout << "=> Compra efetuada com sucesso! Segue abaixo os detalhes:" << std::endl;
-      std::cout << "- Cliente: " << nomeUsuario << std::endl;
-      std::cout << "- Boate: " << boate->get_nome() << std::endl;
-      std::cout << "- Horario: " << boate->get_horaInicio() << 'h' << std::endl;
-      std::cout << "- Preco: R$" << preco << ",00" << std::endl;
-
-      success = true;
+      boate_selecionada = boate;
       break;
     }
   }
 
-  if (!success) {
-    // Caso a tag 'success' estiver como falsa, significa que 
-    // nao encontrou um teatro com o id escolhido
+  if(boate_selecionada == nullptr){
     throw InvalidIdException();
   }
+
+  // Caso os ingressos estiverem esgotados
+  if(boate_selecionada->get_capacidades().size() == 0){
+    throw NoTicketsException();
+  }
+
+  // Iteração para pegar o lote de menor valor
+  for(int i=0; i<boate_selecionada->get_precos().size(); i++){ 
+    if(boate_selecionada->get_precos()[i] < preco){
+      preco = boate_selecionada->get_precos()[i];
+      lote = i;
+    }
+  }
+
+  for(Usuario *usuario : this->usuarios){
+    if(usuario->get_id() == usuario_id){
+      comprador = usuario;
+      // Faz conversao do usuario para crianca, a fim de verificar
+      // permissões abaixo
+      crianca = dynamic_cast<Crianca*>(usuario);
+      break;
+    }
+  }
+
+  if(comprador == nullptr && crianca == nullptr){
+    throw InvalidIdException();
+  }
+
+  
+  if(crianca != nullptr){
+    throw InsufficientPermissionException();
+  }
+  else if(comprador->get_saldo() < preco){
+    throw NotEnoughFundsException();
+  }
+  else{
+    comprador->set_saldo(preco);
+    nome_comprador = comprador->get_nome();
+  }
+
+  // Caso o comprador quiser comprar mais ingressos do que existe
+  if(boate_selecionada->get_capacidades()[lote] < quantidade){
+    throw NotEnoughTicketsException();
+  }
+
+  // Decrementa a capacidade do lote ja que um ingresso foi comprado
+  boate_selecionada->decrement_capacidade(lote, quantidade);
+ 
+  // Remove lote que ja esgotou
+  if(boate_selecionada->get_capacidades()[lote] == 0){
+    boate_selecionada->remove_lote(lote);
+  }
+
+  std::cout << "=> Compra efetuada com sucesso! Segue abaixo os detalhes:" << std::endl;
+  std::cout << "- Cliente: " << nome_comprador << std::endl;
+  std::cout << "- Boate: " << boate_selecionada->get_nome() << std::endl;
+  std::cout << "- Horario: " << boate_selecionada->get_horaInicio() << 'h' << std::endl;
+  std::cout << "- Preco: R$" << preco << ",00" << std::endl;
 }

@@ -40,7 +40,7 @@ int main(){
 
 	// [TESTE] - Máquina Boate:
 	// maquina_boate.show_boates();
-	// maquina_boate.buy_ingresso(4, 1, 50);
+	// maquina_boate.buy_ingresso(4, 1, 30);
 
 	// [TESTE] - Máquina Show:
 	// maquina_show.list_shows();

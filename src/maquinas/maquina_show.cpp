@@ -51,71 +51,71 @@ void MaquinaShow::list_shows(){
 }
 
 void MaquinaShow::buy_ingresso(int show_id, int usuario_id, int quantidade){
-  bool success = false;
+  int preco = 99999, lote;
+  std::string nome_comprador;
+  Usuario* comprador;
+  Show* show_escolhido = nullptr;
+  Crianca* crianca = nullptr;
   
   for(Show* show : this->shows){
-    std::cout << std::left;
     if(show->get_id() == show_id){
-      int preco = 99999;
-      int lote;
-      std::string nomeUsuario;
-
-      // Caso os ingressos estiverem esgotados
-      if(show->get_capacidades().size() == 0){
-        throw NoTicketsException();
-      }
-
-      // Iteração para pegar o lote de menor valor
-      for(int i=0; i<show->get_precos().size(); i++){  
-        if(show->get_precos()[i] < preco){
-          preco = show->get_precos()[i];
-          lote = i;
-        }
-      }
-
-			for(Usuario *usuario : this->usuarios){
-        if(usuario->get_id() == usuario_id){
-					Crianca* crianca = dynamic_cast<Crianca*>(usuario);
-					if(crianca != nullptr){
-						throw InsufficientPermissionException();
-					}
-          else if(usuario->get_saldo() < preco){
-            throw NotEnoughFundsException();
-          }
-          else{
-            usuario->set_saldo(preco);
-            nomeUsuario = usuario->get_nome();
-          }
-        }
-      }
-
-      // Caso o usuario quiser comprar mais ingressos do que existe
-      if(show->get_capacidades()[lote] < quantidade){
-        throw NotEnoughTicketsException();
-      }
-
-      // Decrementa a capacidade do lote ja que um ingresso foi comprado
-      show->decrement_capacidade(lote, quantidade);
-
-      // Remove lote que ja esgotou
-      if(show->get_capacidades()[lote] == 0){
-        show->remove_lote(lote);
-      }
-
-      std::cout << "=> Compra efetuada com sucesso! Segue abaixo os detalhes:" << std::endl;
-      std::cout << "- Cliente: " << nomeUsuario << std::endl;
-      std::cout << "- Show: " << show->get_nome() << std::endl;
-      std::cout << "- Horario: " << show->get_aberturaPortoes() << 'h' << std::endl;
-      std::cout << "- Preco: R$" << preco << ",00" << std::endl;
-
-      success = true;
+      show_escolhido = show;
       break;
     }
   }
 
-  if (!success) {
-    // Caso a tag 'success' estiver como falsa, significa que 
-    // nao encontrou um show com o id escolhido
+  if(show_escolhido == nullptr){
     throw InvalidIdException();
   }
+
+  // Caso os ingressos estiverem esgotados
+  if(show_escolhido->get_capacidades().size() == 0){
+    throw NoTicketsException();
+  }
+
+  // Iteração para pegar o lote de menor valor
+  for(int i=0; i<show_escolhido->get_precos().size(); i++){  
+    if(show_escolhido->get_precos()[i] < preco){
+      preco = show_escolhido->get_precos()[i];
+      lote = i;
+    }
+  }
+
+	for(Usuario *usuario : this->usuarios){
+    if(usuario->get_id() == usuario_id){
+      comprador = usuario;
+			crianca = dynamic_cast<Crianca*>(usuario);
+			break;
+    }
+  }
+
+  if(crianca != nullptr){
+		throw InsufficientPermissionException();
+	}
+  else if(comprador->get_saldo() < preco){
+    throw NotEnoughFundsException();
+  }
+  else{
+    comprador->set_saldo(preco);
+    nome_comprador = comprador->get_nome();
+  }
+
+  // Caso o comprador quiser comprar mais ingressos do que existe
+  if(show_escolhido->get_capacidades()[lote] < quantidade){
+    throw NotEnoughTicketsException();
+  }
+
+  // Decrementa a capacidade do lote ja que um ingresso foi comprado
+  show_escolhido->decrement_capacidade(lote, quantidade);
+
+  // Remove lote que ja esgotou
+  if(show_escolhido->get_capacidades()[lote] == 0){
+    show_escolhido->remove_lote(lote);
+  }
+
+  std::cout << "=> Compra efetuada com sucesso! Segue abaixo os detalhes:" << std::endl;
+  std::cout << "- Cliente: " << nome_comprador << std::endl;
+  std::cout << "- Show: " << show_escolhido->get_nome() << std::endl;
+  std::cout << "- Horario: " << show_escolhido->get_aberturaPortoes() << 'h' << std::endl;
+  std::cout << "- Preco: R$" << preco << ",00" << std::endl;
 }
