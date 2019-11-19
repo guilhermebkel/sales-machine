@@ -98,7 +98,7 @@ void MaquinaFantoche::buy_ingresso(int teatro_id, int horario_key, int usuario_i
   // Iteração para pegar o lote de menor valor
   for(int i=0; i<teatro_escolhido->get_precos().size(); i++){   
     if(teatro_escolhido->get_precos()[i] < preco){
-      preco = teatro_escolhido->get_precos()[i];
+      preco = teatro_escolhido->get_precos()[i] * quantidade;
       lote = i;
     }
   }
@@ -110,11 +110,11 @@ void MaquinaFantoche::buy_ingresso(int teatro_id, int horario_key, int usuario_i
     }
   }
 
-  if(comprador->get_saldo() < preco*quantidade){
+  if(comprador->get_saldo() < preco){
     throw NotEnoughFundsException();
   }
   else{
-    comprador->set_saldo(preco*quantidade);
+    comprador->set_saldo(preco);
     nome_comprador = comprador->get_nome();
   }
 

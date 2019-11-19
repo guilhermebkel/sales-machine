@@ -76,7 +76,7 @@ void MaquinaShow::buy_ingresso(int show_id, int usuario_id, int quantidade){
   // Iteração para pegar o lote de menor valor
   for(int i=0; i<show_escolhido->get_precos().size(); i++){  
     if(show_escolhido->get_precos()[i] < preco){
-      preco = show_escolhido->get_precos()[i];
+      preco = show_escolhido->get_precos()[i] * quantidade;
       lote = i;
     }
   }
@@ -92,11 +92,11 @@ void MaquinaShow::buy_ingresso(int show_id, int usuario_id, int quantidade){
   if(crianca != nullptr){
 		throw InsufficientPermissionException();
 	}
-  else if(comprador->get_saldo() < preco*quantidade){
+  else if(comprador->get_saldo() < preco){
     throw NotEnoughFundsException();
   }
   else{
-    comprador->set_saldo(preco*quantidade);
+    comprador->set_saldo(preco);
     nome_comprador = comprador->get_nome();
   }
 

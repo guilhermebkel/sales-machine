@@ -102,7 +102,7 @@ void MaquinaCinema::buy_ingresso(int filme_id, int horario_key, int usuario_id, 
   // Iteração para pegar o lote de menor valor
   for(int i=0; i<filme_escolhido->get_precos().size(); i++){
     if(filme_escolhido->get_precos()[i] < preco){
-      preco = filme_escolhido->get_precos()[i];
+      preco = filme_escolhido->get_precos()[i] * quantidade;
       lote = i;
     }
   }
@@ -114,11 +114,11 @@ void MaquinaCinema::buy_ingresso(int filme_id, int horario_key, int usuario_id, 
     }
   }
 
-  if(comprador->get_saldo() < preco*quantidade){
+  if(comprador->get_saldo() < preco){
     throw NotEnoughFundsException();
   }
   else{
-    comprador->set_saldo(preco*quantidade);
+    comprador->set_saldo(preco);
     nome_comprador = comprador->get_nome();
   }
 
