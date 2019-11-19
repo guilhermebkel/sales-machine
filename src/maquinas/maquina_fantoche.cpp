@@ -63,7 +63,7 @@ void MaquinaFantoche::show_horarios(int teatro_id){
 
   for(int i=0; i<teatro_escolhido->get_horarios().size(); i++){
     std::cout << std::left;
-    std::cout << "| " << std::setw(2) << i << ' ';
+    std::cout << "| " << std::setw(2) << i+1 << ' ';
 
     std::string horario = std::to_string(teatro_escolhido->get_horarios()[i]) + 'h';
 
@@ -74,7 +74,7 @@ void MaquinaFantoche::show_horarios(int teatro_id){
 }
 
 void MaquinaFantoche::buy_ingresso(int teatro_id, int horario_key, int usuario_id, int quantidade){
-  int preco = 99999, lote;
+  int preco = 99999, lote, horario;
   std::string nome_comprador;
   Usuario* comprador;
   TeatroFantoche* teatro_escolhido;
@@ -131,7 +131,10 @@ void MaquinaFantoche::buy_ingresso(int teatro_id, int horario_key, int usuario_i
     teatro_escolhido->remove_lote(lote);
   } 
 
-  int horario = teatro_escolhido->get_horarios()[horario_key];
+  horario = teatro_escolhido->get_horarios()[horario_key];
+  if(!horario){
+    throw InvalidIdException();
+  }
 
   std::cout << "=> Compra efetuada com sucesso! Segue abaixo os detalhes:" << std::endl;
   std::cout << "- Cliente: " << nome_comprador << std::endl;

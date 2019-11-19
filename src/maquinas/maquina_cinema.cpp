@@ -67,7 +67,7 @@ void MaquinaCinema::show_horarios(int filme_id){
 
   for(int i=0; i<filme_escolhido->get_horarios().size(); i++){
     std::cout << std::left;
-    std::cout << "| " << std::setw(2) << i << ' ';
+    std::cout << "| " << std::setw(2) << i+1 << ' ';
 
     std::string horario = std::to_string(filme_escolhido->get_horarios()[i]) + 'h';
 
@@ -78,7 +78,7 @@ void MaquinaCinema::show_horarios(int filme_id){
 }
 
 void MaquinaCinema::buy_ingresso(int filme_id, int horario_key, int usuario_id, int quantidade){
-  int preco = 99999, lote;
+  int preco = 99999, lote, horario;
   std::string nome_comprador;
   Usuario* comprador = nullptr;
   Cinema* filme_escolhido = nullptr;
@@ -135,7 +135,10 @@ void MaquinaCinema::buy_ingresso(int filme_id, int horario_key, int usuario_id, 
     filme_escolhido->remove_lote(lote);
   } 
 
-  int horario = filme_escolhido->get_horarios()[horario_key];
+  horario = filme_escolhido->get_horarios()[horario_key];
+  if(!horario){
+    throw InvalidIdException();
+  }
 
   std::cout << "=> Compra efetuada com sucesso! Segue abaixo os detalhes:" << std::endl;
   std::cout << "- Cliente: " << nome_comprador << std::endl;
