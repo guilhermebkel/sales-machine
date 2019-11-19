@@ -92,11 +92,11 @@ void MaquinaBoate::buy_ingresso(int boate_id, int usuario_id, int quantidade){
   if(crianca != nullptr){
     throw InsufficientPermissionException();
   }
-  else if(comprador->get_saldo() < preco){
+  else if(comprador->get_saldo() < preco*quantidade){
     throw NotEnoughFundsException();
   }
   else{
-    comprador->set_saldo(preco);
+    comprador->set_saldo(preco*quantidade);
     nome_comprador = comprador->get_nome();
   }
 

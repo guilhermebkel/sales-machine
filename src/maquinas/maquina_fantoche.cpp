@@ -110,11 +110,11 @@ void MaquinaFantoche::buy_ingresso(int teatro_id, int horario_key, int usuario_i
     }
   }
 
-  if(comprador->get_saldo() < preco){
+  if(comprador->get_saldo() < preco*quantidade){
     throw NotEnoughFundsException();
   }
   else{
-    comprador->set_saldo(preco);
+    comprador->set_saldo(preco*quantidade);
     nome_comprador = comprador->get_nome();
   }
 
