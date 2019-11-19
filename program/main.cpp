@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>
 
 #include "usuarios/usuario.h"
 #include "eventos/evento.h"
@@ -12,44 +13,6 @@
 #include "helpers/usuarios/list.h"
 #include "helpers/eventos/setup.h"
 
-// int main(){
-	
-
-// 	// [TESTE] - Carregar usuários e eventos
-	
-
-// 	// [TESTE] - Listar todos os usuários
-	
-
-// 	MaquinaFantoche maquina_fantoche(eventos, usuarios);
-// 	MaquinaCinema maquina_cinema(eventos, usuarios);
-// 	MaquinaBoate maquina_boate(eventos, usuarios);
-// 	MaquinaShow maquina_show(eventos, usuarios);
-
-// 	// [TESTE] - Máquina Fantoche:
-// 	// maquina_fantoche.show_teatros();
-// 	// maquina_fantoche.show_horarios(5);
-// 	// maquina_fantoche.buy_ingresso(5, 1, 1, 150);
-	
-// 	// [TESTE] - Máquina Cinema:
-// 	// maquina_cinema.show_filmes();
-// 	// maquina_cinema.show_horarios(1);
-// 	// maquina_cinema.buy_ingresso(1, 1, 1, 150);
-
-// 	// [TESTE] - Máquina Boate:
-// 	// maquina_boate.show_boates();
-// 	// maquina_boate.buy_ingresso(4, 1, 30);
-
-// 	// [TESTE] - Máquina Show:
-// 	// maquina_show.list_shows();
-// 	// maquina_show.buy_ingresso(7, 2, 20);
-	
-// 	// Desaloca todos os ponteiros dinâmicos utilizados
-	
-
-// 	return 0;
-// }
-
 enum menu1 {CARREGA_USUARIOS_EVENTOS = 1, EXIBIR_USUARIOS, COMPRAR_INGRESSOS, SAIR };
 enum menu2 {CINEMA = 1, SHOW, BOATE, FANTOCHE};
 
@@ -59,36 +22,43 @@ int main(){
 	Usuario* usuario_logado = nullptr;
 	int id_usuario_logado;
 
-  int opcao1 = 0;
-  int opcao2 = 0;
+  int opcao_principal = 0;
+  int opcao_eventos = 0;
 
-  while(opcao1 != 4) {
-    std::cout << "SISTEMA DE VENDAS DE INGRESSO" << "\n\n";
-    std::cout << "Favor escolher uma das opcoes abaixo:\n";
+	system("clear");
+	std::cout << "=> SISTEMA DE VENDAS DE INGRESSO" << std::endl << std::endl;
 
-    std::cout << "1. Carregar usuarios e eventos\n";
-    std::cout << "2. Exibir usuarios cadastrados\n";
-    std::cout << "3. Comprar ingressos\n";
-    std::cout << "4. Sair\n";
-    std::cout << "Opcao: ";
+  while(opcao_principal != 4) {
+    std::cout << "- O que você deseja fazer?" << std::endl;
 
-    std::cin >> opcao1;
+    std::cout << "1. Carregar usuarios e eventos" << std::endl;
+    std::cout << "2. Exibir usuarios cadastrados" << std::endl;
+    std::cout << "3. Comprar ingressos" << std::endl;
+    std::cout << "4. Sair" << std::endl;
+    std::cout << "=> Opcao: ";
 
-    switch(opcao1) {
+    std::cin >> opcao_principal;
+
+    switch(opcao_principal) {
 			case CARREGA_USUARIOS_EVENTOS: {
         usuarios = setup_usuarios();
 				eventos = setup_eventos(usuarios);
-        std::cout << "\n=> Informações de eventos e usuários foram carregadas!\n\n";
+				system("clear");
+        std::cout << "[ STATUS ] Informações de eventos e usuários carregadas com sucesso...\n\n";
 	      break;
       }
       case EXIBIR_USUARIOS: {
+				system("clear");
         list_usuarios(usuarios);
+				std::cout << std::endl << "=> Pressione ENTER para retornar ao menu principal...";
+				std::cin.ignore();
+				std::cin.get();
+				system("clear");
+				std::cout << "[ STATUS ] Usuários listados com sucesso...\n\n";
 	      break;
       }
       case COMPRAR_INGRESSOS:{
-        std::cout << "\nOpcao 3 selecionada!\n\n";
-        
-        std::cout << "\nInsira o identificador do usuário: ";
+        std::cout << std::endl << "-> Insira o ID do usuário: ";
         std::cin >> id_usuario_logado;
 
         // Função que verifica se usuario existe
@@ -101,19 +71,24 @@ int main(){
         
 				// Caso o usuario logado for inválido
 				if(usuario_logado == nullptr){
+					system("clear");
+					std::cout << "[ STATUS ] O usuário escolhido não existe..." << std::endl << std::endl;
 					break;
 				}
         
-        std::cout << "Favor escolher uma das opcoes abaixo:\n";
-        std::cout << "1. Cinema\n";
-        std::cout << "2. Show\n";
-        std::cout << "3. Boate\n";
-        std::cout << "4. Fantoche\n";
-        std::cout << "Opcao: ";
+				system("clear");
+				std::cout << "[ STATUS ] Usuário autenticado..." << std::endl << std::endl;
 
-        std::cin >> opcao2;
+        std::cout << "- Você deseja comprar ingressos de qual evento?" << std::endl;
+        std::cout << "1. Cinema" << std::endl;
+        std::cout << "2. Show" << std::endl;
+        std::cout << "3. Boate" << std::endl;
+        std::cout << "4. Fantoche" << std::endl;
+        std::cout << "=> Opcao: ";
 
-        switch(opcao2) {
+        std::cin >> opcao_eventos;
+
+        switch(opcao_eventos) {
           case CINEMA: {
             std::cout << "\nCinema Selecionado!\n\n";
 						break;
@@ -131,7 +106,8 @@ int main(){
 						break;
           }
 					default: {
-            std::cout << "Opcao Invalida!\n\n";
+						system("clear");
+						std::cout << "[ STATUS ] Opção inválida selecionada no menu de eventos..." << std::endl << std::endl;
 						break;
           }
         }
@@ -146,3 +122,26 @@ int main(){
     }
   }
 }
+
+	// MaquinaFantoche maquina_fantoche(eventos, usuarios);
+	// MaquinaCinema maquina_cinema(eventos, usuarios);
+	// MaquinaBoate maquina_boate(eventos, usuarios);
+	// MaquinaShow maquina_show(eventos, usuarios);
+
+	// [TESTE] - Máquina Fantoche:
+	// maquina_fantoche.show_teatros();
+	// maquina_fantoche.show_horarios(5);
+	// maquina_fantoche.buy_ingresso(5, 1, 1, 150);
+	
+	// [TESTE] - Máquina Cinema:
+	// maquina_cinema.show_filmes();
+	// maquina_cinema.show_horarios(1);
+	// maquina_cinema.buy_ingresso(1, 1, 1, 150);
+
+	// [TESTE] - Máquina Boate:
+	// maquina_boate.show_boates();
+	// maquina_boate.buy_ingresso(4, 1, 30);
+
+	// [TESTE] - Máquina Show:
+	// maquina_show.list_shows();
+	// maquina_show.buy_ingresso(7, 2, 20);
