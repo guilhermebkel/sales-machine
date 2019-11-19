@@ -14,7 +14,7 @@
 #include "helpers/eventos/setup.h"
 
 enum menu1 {CARREGA_USUARIOS_EVENTOS = 1, EXIBIR_USUARIOS, COMPRAR_INGRESSOS, SAIR };
-enum menu2 {CINEMA = 1, SHOW, BOATE, FANTOCHE};
+enum menu2 {CINEMA = 1, SHOW, BOATE, FANTOCHE, CONCLUIR};
 
 int main(){
 	std::vector<Usuario*> usuarios;
@@ -79,39 +79,45 @@ int main(){
 				system("clear");
 				std::cout << "[ STATUS ] Usuário autenticado..." << std::endl << std::endl;
 
-        std::cout << "- Você deseja comprar ingressos de qual evento?" << std::endl;
-        std::cout << "1. Cinema" << std::endl;
-        std::cout << "2. Show" << std::endl;
-        std::cout << "3. Boate" << std::endl;
-        std::cout << "4. Fantoche" << std::endl;
-        std::cout << "=> Opcao: ";
+				while(opcao_eventos != 5){
+					std::cout << "- Você deseja comprar ingressos de qual evento?" << std::endl;
+					std::cout << "1. Cinema" << std::endl;
+					std::cout << "2. Show" << std::endl;
+					std::cout << "3. Boate" << std::endl;
+					std::cout << "4. Fantoche" << std::endl;
+					std::cout << "5. Concluir" << std::endl;
+					std::cout << "=> Opcao: ";
 
-        std::cin >> opcao_eventos;
+					std::cin >> opcao_eventos;
 
-        switch(opcao_eventos) {
-          case CINEMA: {
-            std::cout << "\nCinema Selecionado!\n\n";
-						break;
-          }
-          case SHOW: {
-            std::cout << "\nShow Selecionado!\n\n";
-						break;
-          }
-					case BOATE: {
-						std::cout << "\nBoate Selecionado!\n\n";
-						break;
-          }
-					case FANTOCHE: {
-            std::cout << "\nFantoche Selecionado\n\n";
-						break;
-          }
-					default: {
-						system("clear");
-						std::cout << "[ STATUS ] Opção inválida selecionada no menu de eventos..." << std::endl << std::endl;
-						break;
-          }
-        }
-					break;
+					switch(opcao_eventos) {
+						case CINEMA: {
+							std::cout << "\nCinema Selecionado!\n\n";
+							break;
+						}
+						case SHOW: {
+							std::cout << "\nShow Selecionado!\n\n";
+							break;
+						}
+						case BOATE: {
+							std::cout << "\nBoate Selecionado!\n\n";
+							break;
+						}
+						case FANTOCHE: {
+							std::cout << "\nFantoche Selecionado\n\n";
+							break;
+						}
+						case CONCLUIR: {
+							opcao_principal = 4;
+							break;
+						}
+						default: {
+							system("clear");
+							std::cout << "[ STATUS ] Opção inválida selecionada no menu de eventos..." << std::endl << std::endl;
+							break;
+						}
+					}
+				}
       }
       case SAIR: {
 				deallocate_usuarios(usuarios);
@@ -119,6 +125,11 @@ int main(){
         std::cout << "\n=> Aplicação sendo finalizada...\n\n";
 				return 0;
       }
+			default: {
+				system("clear");
+				std::cout << "[ STATUS ] Opção inválida selecionada no menu principal..." << std::endl << std::endl;
+				break;
+			}
     }
   }
 }
