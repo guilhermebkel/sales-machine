@@ -4,10 +4,7 @@
 #include "usuarios/usuario.h"
 #include "eventos/evento.h"
 
-#include "maquinas/maquina_fantoche.h"
-#include "maquinas/maquina_cinema.h"
-#include "maquinas/maquina_boate.h"
-#include "maquinas/maquina_show.h"
+#include "totem/totem.h"
 
 #include "helpers/usuarios/setup.h"
 #include "helpers/usuarios/list.h"
@@ -95,27 +92,8 @@ int main(){
 
 					switch(opcao_eventos) {
 						case CINEMA: {
-							MaquinaCinema maquina_cinema(eventos, usuarios);
 							try{
-								system("clear");
-								maquina_cinema.show_filmes();
-								std::cout << std::endl << "=> Insira a ID do filme desejado: ";
-								std::cin >> id_evento;
-
-								system("clear");
-								maquina_cinema.show_horarios(id_evento);
-								std::cout << std::endl << "=> Insira a ID do horario desejado: ";
-								std::cin >> id_horario;
-								std::cout << std::endl << "=> Quantos ingressos você deseja comprar? ";
-								std::cin >> quantidade_ingressos;
-
-								system("clear");
-								maquina_cinema.buy_ingresso(id_evento, id_horario, usuario_logado->get_id(), quantidade_ingressos);
-								std::cout << std::endl << "=> Pressione ENTER para retornar ao menu de eventos...";
-								std::cin.ignore();
-								std::cin.get();
-								system("clear");
-								std::cout << "[ STATUS ] Ingressos para cinema comprados com sucesso...\n\n";
+								Totem::initialize("cinema", usuario_logado->get_id(), eventos, usuarios);
 							}
 							catch(std::exception &error){
 								system("clear");
@@ -124,22 +102,8 @@ int main(){
 							break;
 						}
 						case SHOW: {
-							MaquinaShow maquina_show(eventos, usuarios);
 							try{
-								system("clear");
-								maquina_show.list_shows();
-								std::cout << std::endl << "=> Insira a ID do show desejado: ";
-								std::cin >> id_evento;
-								std::cout << std::endl << "=> Quantos ingressos você deseja comprar? ";
-								std::cin >> quantidade_ingressos;
-
-								system("clear");
-								maquina_show.buy_ingresso(id_evento, usuario_logado->get_id(), quantidade_ingressos);
-								std::cout << std::endl << "=> Pressione ENTER para retornar ao menu de eventos...";
-								std::cin.ignore();
-								std::cin.get();
-								system("clear");
-								std::cout << "[ STATUS ] Ingressos para show comprados com sucesso...\n\n";
+								Totem::initialize("show", usuario_logado->get_id(), eventos, usuarios);
 							}
 							catch(std::exception &error){
 								system("clear");
@@ -148,22 +112,8 @@ int main(){
 							break;
 						}
 						case BOATE: {
-							MaquinaBoate maquina_boate(eventos, usuarios);
 							try{
-								system("clear");
-								maquina_boate.show_boates();;
-								std::cout << std::endl << "=> Insira a ID da boate desejada: ";
-								std::cin >> id_evento;
-								std::cout << std::endl << "=> Quantos ingressos você deseja comprar? ";
-								std::cin >> quantidade_ingressos;
-
-								system("clear");
-								maquina_boate.buy_ingresso(id_evento, usuario_logado->get_id(), quantidade_ingressos);
-								std::cout << std::endl << "=> Pressione ENTER para retornar ao menu de eventos...";
-								std::cin.ignore();
-								std::cin.get();
-								system("clear");
-								std::cout << "[ STATUS ] Ingressos para boate comprados com sucesso...\n\n";
+								Totem::initialize("boate", usuario_logado->get_id(), eventos, usuarios);
 							}
 							catch(std::exception &error){
 								system("clear");
@@ -172,27 +122,8 @@ int main(){
 							break;
 						}
 						case FANTOCHE: {
-							MaquinaFantoche maquina_fantoche(eventos, usuarios);
 							try{
-								system("clear");
-								maquina_fantoche.show_teatros();
-								std::cout << std::endl << "=> Insira a ID do teatro desejado: ";
-								std::cin >> id_evento;
-
-								system("clear");
-								maquina_fantoche.show_horarios(id_evento);
-								std::cout << std::endl << "=> Insira a ID do horario desejado: ";
-								std::cin >> id_horario;
-								std::cout << std::endl << "=> Quantos ingressos você deseja comprar? ";
-								std::cin >> quantidade_ingressos;
-
-								system("clear");
-								maquina_fantoche.buy_ingresso(id_evento, id_horario, usuario_logado->get_id(), quantidade_ingressos);
-								std::cout << std::endl << "=> Pressione ENTER para retornar ao menu de eventos...";
-								std::cin.ignore();
-								std::cin.get();
-								system("clear");
-								std::cout << "[ STATUS ] Ingressos para cinema comprados com sucesso...\n\n";
+								Totem::initialize("fantoche", usuario_logado->get_id(), eventos, usuarios);
 							}
 							catch(std::exception &error){
 								system("clear");

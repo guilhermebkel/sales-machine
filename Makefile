@@ -6,6 +6,10 @@ CFLAGS := -g -O3 -std=c++11 -I include/ -I third_party/ -I src/
 
 all: main
 
+totem:
+	@mkdir build/totem/
+	$(CC) $(CFLAGS) -c src/totem/totem.cpp -o build/totem/totem.o
+
 eventos:
 	@mkdir build/eventos/
 	$(CC) $(CFLAGS) -c src/eventos/boate.cpp -o build/eventos/boate.o
@@ -26,8 +30,8 @@ maquinas:
 	$(CC) $(CFLAGS) -c src/maquinas/maquina_boate.cpp -o build/maquinas/maquina_boate.o
 	$(CC) $(CFLAGS) -c src/maquinas/maquina_show.cpp -o build/maquinas/maquina_show.o
 
-main: dir clean eventos usuarios maquinas
-	$(CC) $(CFLAGS) build/eventos/*.o build/usuarios/*.o build/maquinas/*.o program/main.cpp -o main
+main: dir clean eventos usuarios maquinas totem
+	$(CC) $(CFLAGS) build/eventos/*.o build/usuarios/*.o build/maquinas/*.o build/totem/*.o program/main.cpp -o main
 
 clean:
 	$(RM) -r $(BUILDDIR)/* $(TARGET)
