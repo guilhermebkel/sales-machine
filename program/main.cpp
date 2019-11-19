@@ -20,7 +20,7 @@ int main(){
 	std::vector<Usuario*> usuarios;
 	std::vector<Evento*> eventos;
 	Usuario* usuario_logado = nullptr;
-	int id_usuario_logado;
+	int id_usuario_logado, id_evento, id_horario, quantidade_ingressos;
 
   int opcao_principal = 0;
   int opcao_eventos = 0;
@@ -67,6 +67,9 @@ int main(){
 						usuario_logado = usuario;
 						break;
 					}
+					else{
+						usuario_logado = nullptr;
+					}
 				}
         
 				// Caso o usuario logado for inválido
@@ -92,23 +95,113 @@ int main(){
 
 					switch(opcao_eventos) {
 						case CINEMA: {
-							std::cout << "\nCinema Selecionado!\n\n";
+							MaquinaCinema maquina_cinema(eventos, usuarios);
+							try{
+								system("clear");
+								maquina_cinema.show_filmes();
+								std::cout << std::endl << "=> Insira a ID do filme desejado: ";
+								std::cin >> id_evento;
+
+								system("clear");
+								maquina_cinema.show_horarios(id_evento);
+								std::cout << std::endl << "=> Insira a ID do horario desejado: ";
+								std::cin >> id_horario;
+								std::cout << std::endl << "=> Quantos ingressos você deseja comprar? ";
+								std::cin >> quantidade_ingressos;
+
+								system("clear");
+								maquina_cinema.buy_ingresso(id_evento, id_horario, usuario_logado->get_id(), quantidade_ingressos);
+								std::cout << std::endl << "=> Pressione ENTER para retornar ao menu de eventos...";
+								std::cin.ignore();
+								std::cin.get();
+								system("clear");
+								std::cout << "[ STATUS ] Ingressos para cinema comprados com sucesso...\n\n";
+							}
+							catch(std::exception &error){
+								system("clear");
+								std::cout << "[ STATUS ] " << error.what() << std::endl << std::endl;
+							}
 							break;
 						}
 						case SHOW: {
-							std::cout << "\nShow Selecionado!\n\n";
+							MaquinaShow maquina_show(eventos, usuarios);
+							try{
+								system("clear");
+								maquina_show.list_shows();
+								std::cout << std::endl << "=> Insira a ID do show desejado: ";
+								std::cin >> id_evento;
+								std::cout << std::endl << "=> Quantos ingressos você deseja comprar? ";
+								std::cin >> quantidade_ingressos;
+
+								system("clear");
+								maquina_show.buy_ingresso(id_evento, usuario_logado->get_id(), quantidade_ingressos);
+								std::cout << std::endl << "=> Pressione ENTER para retornar ao menu de eventos...";
+								std::cin.ignore();
+								std::cin.get();
+								system("clear");
+								std::cout << "[ STATUS ] Ingressos para show comprados com sucesso...\n\n";
+							}
+							catch(std::exception &error){
+								system("clear");
+								std::cout << "[ STATUS ] " << error.what() << std::endl << std::endl;
+							}
 							break;
 						}
 						case BOATE: {
-							std::cout << "\nBoate Selecionado!\n\n";
+							MaquinaBoate maquina_boate(eventos, usuarios);
+							try{
+								system("clear");
+								maquina_boate.show_boates();;
+								std::cout << std::endl << "=> Insira a ID da boate desejada: ";
+								std::cin >> id_evento;
+								std::cout << std::endl << "=> Quantos ingressos você deseja comprar? ";
+								std::cin >> quantidade_ingressos;
+
+								system("clear");
+								maquina_boate.buy_ingresso(id_evento, usuario_logado->get_id(), quantidade_ingressos);
+								std::cout << std::endl << "=> Pressione ENTER para retornar ao menu de eventos...";
+								std::cin.ignore();
+								std::cin.get();
+								system("clear");
+								std::cout << "[ STATUS ] Ingressos para boate comprados com sucesso...\n\n";
+							}
+							catch(std::exception &error){
+								system("clear");
+								std::cout << "[ STATUS ] " << error.what() << std::endl << std::endl;
+							}
 							break;
 						}
 						case FANTOCHE: {
-							std::cout << "\nFantoche Selecionado\n\n";
+							MaquinaFantoche maquina_fantoche(eventos, usuarios);
+							try{
+								system("clear");
+								maquina_fantoche.show_teatros();
+								std::cout << std::endl << "=> Insira a ID do teatro desejado: ";
+								std::cin >> id_evento;
+
+								system("clear");
+								maquina_fantoche.show_horarios(id_evento);
+								std::cout << std::endl << "=> Insira a ID do horario desejado: ";
+								std::cin >> id_horario;
+								std::cout << std::endl << "=> Quantos ingressos você deseja comprar? ";
+								std::cin >> quantidade_ingressos;
+
+								system("clear");
+								maquina_fantoche.buy_ingresso(id_evento, id_horario, usuario_logado->get_id(), quantidade_ingressos);
+								std::cout << std::endl << "=> Pressione ENTER para retornar ao menu de eventos...";
+								std::cin.ignore();
+								std::cin.get();
+								system("clear");
+								std::cout << "[ STATUS ] Ingressos para cinema comprados com sucesso...\n\n";
+							}
+							catch(std::exception &error){
+								system("clear");
+								std::cout << "[ STATUS ] " << error.what() << std::endl << std::endl;
+							}
 							break;
 						}
 						case CONCLUIR: {
-							opcao_principal = 4;
+							// opcao_principal = 4;
 							break;
 						}
 						default: {
@@ -118,6 +211,11 @@ int main(){
 						}
 					}
 				}
+
+				opcao_eventos = 0;
+				system("clear");
+				std::cout << "[ STATUS ] Saida do menu de eventos efetuada com sucesso..." << std::endl << std::endl;
+				break;
       }
       case SAIR: {
 				deallocate_usuarios(usuarios);
@@ -133,26 +231,3 @@ int main(){
     }
   }
 }
-
-	// MaquinaFantoche maquina_fantoche(eventos, usuarios);
-	// MaquinaCinema maquina_cinema(eventos, usuarios);
-	// MaquinaBoate maquina_boate(eventos, usuarios);
-	// MaquinaShow maquina_show(eventos, usuarios);
-
-	// [TESTE] - Máquina Fantoche:
-	// maquina_fantoche.show_teatros();
-	// maquina_fantoche.show_horarios(5);
-	// maquina_fantoche.buy_ingresso(5, 1, 1, 150);
-	
-	// [TESTE] - Máquina Cinema:
-	// maquina_cinema.show_filmes();
-	// maquina_cinema.show_horarios(1);
-	// maquina_cinema.buy_ingresso(1, 1, 1, 150);
-
-	// [TESTE] - Máquina Boate:
-	// maquina_boate.show_boates();
-	// maquina_boate.buy_ingresso(4, 1, 30);
-
-	// [TESTE] - Máquina Show:
-	// maquina_show.list_shows();
-	// maquina_show.buy_ingresso(7, 2, 20);
