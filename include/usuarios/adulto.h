@@ -18,6 +18,8 @@ class Adulto: public Usuario {
 		std::vector<Crianca*> get_dependentes();
 		float get_saldo();
 		void set_saldo(float quantia);
+		int get_ingressos_comprados();
+		void set_ingressos_comprados(int quantidade);
 };
 
 #endif

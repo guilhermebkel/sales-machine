@@ -18,6 +18,8 @@ class Crianca: public Usuario {
 		float get_saldo();
 		void set_saldo(float quantia);
 		void set_responsavel(Adulto* responsavel);
+		int get_ingressos_comprados();
+		void set_ingressos_comprados(int quantidade);
 };
 
 #endif

@@ -10,6 +10,7 @@ class Usuario {
 		std::string _nome;
 		int _idade;
 		float _saldo;
+		int _ingressos_comprados = 0;
 
 		Usuario(int id, std::string nome, int idade, float saldo):
 			_id(id), _nome(nome), _idade(idade), _saldo(saldo){}
@@ -19,6 +20,8 @@ class Usuario {
 		virtual int get_idade() = 0;
 		virtual float get_saldo() = 0;
 		virtual void set_saldo(float quantia) = 0;
+		virtual int get_ingressos_comprados() = 0;
+		virtual void set_ingressos_comprados(int quantidade) = 0;
 };
 
 #endif

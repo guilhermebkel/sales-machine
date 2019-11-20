@@ -97,6 +97,7 @@ void MaquinaBoate::buy_ingresso(int boate_id, int usuario_id, int quantidade){
   }
   else{
     comprador->set_saldo(preco);
+    comprador->set_ingressos_comprados(quantidade);
     nome_comprador = comprador->get_nome();
   }
 
@@ -107,6 +108,9 @@ void MaquinaBoate::buy_ingresso(int boate_id, int usuario_id, int quantidade){
 
   // Decrementa a capacidade do lote ja que um ingresso foi comprado
   boate_selecionada->decrement_capacidade(lote, quantidade);
+
+  // Aumenta a quantidade de ingressos que foram vendidos
+  boate_selecionada->set_ingressos_vendidos(quantidade);
  
   // Remove lote que ja esgotou
   if(boate_selecionada->get_capacidades()[lote] == 0){

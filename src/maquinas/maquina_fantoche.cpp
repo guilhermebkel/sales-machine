@@ -115,6 +115,7 @@ void MaquinaFantoche::buy_ingresso(int teatro_id, int horario_key, int usuario_i
   }
   else{
     comprador->set_saldo(preco);
+    comprador->set_ingressos_comprados(quantidade);
     nome_comprador = comprador->get_nome();
   }
 
@@ -125,6 +126,9 @@ void MaquinaFantoche::buy_ingresso(int teatro_id, int horario_key, int usuario_i
 
   // Decrementa a capacidade do lote ja que um ingresso foi comprado
   teatro_escolhido->decrement_capacidade(lote, quantidade);
+  
+  // Aumenta a quantidade de ingressos que foram vendidos
+  teatro_escolhido->set_ingressos_vendidos(quantidade);
 
   // Remove lote que ja esgotou
   if(teatro_escolhido->get_capacidades()[lote] == 0){

@@ -119,6 +119,7 @@ void MaquinaCinema::buy_ingresso(int filme_id, int horario_key, int usuario_id, 
   }
   else{
     comprador->set_saldo(preco);
+    comprador->set_ingressos_comprados(quantidade);
     nome_comprador = comprador->get_nome();
   }
 
@@ -129,6 +130,9 @@ void MaquinaCinema::buy_ingresso(int filme_id, int horario_key, int usuario_id, 
 
   // Decrementa a capacidade do lote ja que um ingresso foi comprado
   filme_escolhido->decrement_capacidade(lote, quantidade);
+
+  // Aumenta a quantidade de ingressos que foram vendidos
+  filme_escolhido->set_ingressos_vendidos(quantidade);
 
   // Remove lote que ja esgotou
   if(filme_escolhido->get_capacidades()[lote] == 0){

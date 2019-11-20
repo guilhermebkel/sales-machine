@@ -31,3 +31,11 @@ float Adulto::get_saldo(){
 void Adulto::set_saldo(float quantia){
 	this->_saldo -= quantia;
 }
+
+int Adulto::get_ingressos_comprados(){
+	return _ingressos_comprados;
+}
+
+void Adulto::set_ingressos_comprados(int quantidade){
+	this->_ingressos_comprados += quantidade;
+}

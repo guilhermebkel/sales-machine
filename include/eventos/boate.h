@@ -23,6 +23,8 @@ class Boate: public EventoAdulto {
 		void remove_lote(int lote);
 		int get_horaInicio();
 		int get_horaFim();
+		void set_ingressos_vendidos(int quantidade);
+		int get_ingressos_vendidos();
 };
 
 #endif

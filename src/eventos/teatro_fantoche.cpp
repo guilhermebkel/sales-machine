@@ -37,3 +37,11 @@ void TeatroFantoche::remove_lote(int lote){
 	_capacidades.erase(_capacidades.begin()+lote);
 	_precos.erase(_precos.begin()+lote);
 }
+
+void TeatroFantoche::set_ingressos_vendidos(int quantidade){
+	this->_ingressos_vendidos += quantidade;
+}
+		
+int TeatroFantoche::get_ingressos_vendidos(){
+	return this->_ingressos_vendidos;
+}

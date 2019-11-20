@@ -97,6 +97,7 @@ void MaquinaShow::buy_ingresso(int show_id, int usuario_id, int quantidade){
   }
   else{
     comprador->set_saldo(preco);
+    comprador->set_ingressos_comprados(quantidade);
     nome_comprador = comprador->get_nome();
   }
 
@@ -107,6 +108,9 @@ void MaquinaShow::buy_ingresso(int show_id, int usuario_id, int quantidade){
 
   // Decrementa a capacidade do lote ja que um ingresso foi comprado
   show_escolhido->decrement_capacidade(lote, quantidade);
+
+  // Aumenta a quantidade de ingressos que foram vendidos
+  show_escolhido->set_ingressos_vendidos(quantidade);
 
   // Remove lote que ja esgotou
   if(show_escolhido->get_capacidades()[lote] == 0){

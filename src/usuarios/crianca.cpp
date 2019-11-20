@@ -32,3 +32,11 @@ void Crianca::set_saldo(float quantia){
 void Crianca::set_responsavel(Adulto* responsavel){
 	this->_responsavel = responsavel;
 }
+
+int Crianca::get_ingressos_comprados(){
+	return _ingressos_comprados;
+}
+
+void Crianca::set_ingressos_comprados(int quantidade){
+	this->_ingressos_comprados += quantidade;
+}

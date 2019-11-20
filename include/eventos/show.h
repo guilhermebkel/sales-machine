@@ -24,6 +24,8 @@ class Show: public EventoAdulto {
 		std::vector<std::string> get_artistas();
 		void decrement_capacidade(int lote, int quantidade);
 		void remove_lote(int lote);
+		void set_ingressos_vendidos(int quantidade);
+		int get_ingressos_vendidos();
 };
 
 #endif
