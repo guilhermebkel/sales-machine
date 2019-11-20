@@ -1,6 +1,12 @@
 #include <iomanip>
 
+#include "usuarios/adulto.h"
+
 #include "totem/totem.h"
+
+#include "helpers/usuarios/get_dependente.h"
+
+#include "exceptions/invalid_id.h"
 
 std::set<int, unique_id> Totem::eventos_modificados;
 std::set<int, unique_id> Totem::usuarios_modificados;
@@ -86,6 +92,7 @@ void Totem::boot_boate(int usuario_id, std::vector<Evento*> eventos, std::vector
 
 void Totem::boot_fantoche(int usuario_id, std::vector<Evento*> eventos, std::vector<Usuario*> usuarios){
 	int id_evento, id_horario, quantidade_ingressos;
+	Adulto* adulto = nullptr;
 
 	MaquinaFantoche maquina_fantoche(eventos, usuarios);
 
@@ -100,6 +107,22 @@ void Totem::boot_fantoche(int usuario_id, std::vector<Evento*> eventos, std::vec
 	std::cin >> id_horario;
 	std::cout << std::endl << "=> Quantos ingressos você deseja comprar? ";
 	std::cin >> quantidade_ingressos;
+
+	// Verifica se o comprador é um adulto. Caso ele for, pede o ID
+	// de seu usuario dependente
+	for(Usuario *usuario : usuarios){
+	  Adulto* adulto = dynamic_cast<Adulto*>(usuario);
+
+    if(usuario->get_id() == usuario_id && adulto != nullptr){
+			std::cout << std::endl << "=> Digite a ID do seu dependente: ";
+			std::cin >> usuario_id;
+
+			Crianca* comprador = getDependente(usuario_id, adulto->get_dependentes());
+			if(comprador == nullptr){
+				throw InvalidIdException();
+			}
+    }
+  }
 
 	clear();
 	maquina_fantoche.buy_ingresso(id_evento, id_horario, usuario_id, quantidade_ingressos);

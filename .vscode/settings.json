@@ -51,5 +51,9 @@
     "map": "cpp",
     "any": "cpp",
     "variant": "cpp"
-  }
+  },
+  "cSpell.ignoreWords": [
+    "fantoche",
+    "maquina"
+  ]
 }
