@@ -14,6 +14,7 @@ std::set<int, unique_id> Totem::usuarios_modificados;
 // Adiciona import customizado de "helpers/screen/*"
 // para evitar erro de dependência circular
 void status(std::string message);
+void press_enter();
 void clear();
 
 void Totem::boot_cinema(int usuario_id, std::vector<Evento*> eventos, std::vector<Usuario*> usuarios){
@@ -35,9 +36,7 @@ void Totem::boot_cinema(int usuario_id, std::vector<Evento*> eventos, std::vecto
 
 	clear();
 	maquina_cinema.buy_ingresso(id_evento, id_horario, usuario_id, quantidade_ingressos);
-	std::cout << std::endl << "=> Pressione ENTER para retornar ao menu de eventos...";
-	std::cin.ignore();
-	std::cin.get();
+	press_enter();
 
 	status("Ingressos para cinema comprados com sucesso...");
 	eventos_modificados.insert(id_evento);
@@ -58,9 +57,7 @@ void Totem::boot_show(int usuario_id, std::vector<Evento*> eventos, std::vector<
 
 	clear();
 	maquina_show.buy_ingresso(id_evento, usuario_id, quantidade_ingressos);
-	std::cout << std::endl << "=> Pressione ENTER para retornar ao menu de eventos...";
-	std::cin.ignore();
-	std::cin.get();
+	press_enter();
 
 	status("Ingressos para show comprados com sucesso...");
 	eventos_modificados.insert(id_evento);
@@ -81,9 +78,7 @@ void Totem::boot_boate(int usuario_id, std::vector<Evento*> eventos, std::vector
 
 	clear();
 	maquina_boate.buy_ingresso(id_evento, usuario_id, quantidade_ingressos);
-	std::cout << std::endl << "=> Pressione ENTER para retornar ao menu de eventos...";
-	std::cin.ignore();
-	std::cin.get();
+	press_enter();
 
 	status("Ingressos para boate comprados com sucesso...");
 	eventos_modificados.insert(id_evento);
@@ -126,9 +121,7 @@ void Totem::boot_fantoche(int usuario_id, std::vector<Evento*> eventos, std::vec
 
 	clear();
 	maquina_fantoche.buy_ingresso(id_evento, id_horario, usuario_id, quantidade_ingressos);
-	std::cout << std::endl << "=> Pressione ENTER para retornar ao menu de eventos...";
-	std::cin.ignore();
-	std::cin.get();
+	press_enter();
 
 	status("Ingressos para boate comprados com sucesso...");
 	eventos_modificados.insert(id_evento);

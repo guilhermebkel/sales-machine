@@ -11,6 +11,7 @@
 #include "helpers/eventos/setup.h"
 #include "helpers/screen/clear.h"
 #include "helpers/screen/status.h"
+#include "helpers/screen/press_enter.h"
 
 enum menu1 {CARREGA_USUARIOS_EVENTOS = 1, EXIBIR_USUARIOS, COMPRAR_INGRESSOS, SAIR };
 enum menu2 {CINEMA = 1, SHOW, BOATE, FANTOCHE, CONCLUIR};
@@ -49,9 +50,8 @@ int main(){
 				clear();
 
         list_usuarios(usuarios);
-				std::cout << std::endl << "=> Pressione ENTER para retornar ao menu principal...";
-				std::cin.ignore();
-				std::cin.get();
+				
+				press_enter();
 
 				status("Usuários listados com sucesso...");
 	      break;
@@ -130,9 +130,7 @@ int main(){
 						case CONCLUIR: {
 							clear();
 							Totem::get_report(eventos, usuarios);
-							std::cout << std::endl << "=> Pressione ENTER para retornar ao menu principal...";
-							std::cin.ignore();
-							std::cin.get();
+							press_enter();
 							break;
 						}
 						default: {
