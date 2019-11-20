@@ -9,6 +9,7 @@
 #include "helpers/usuarios/setup.h"
 #include "helpers/usuarios/list.h"
 #include "helpers/eventos/setup.h"
+#include "helpers/screen/status.h"
 
 enum menu1 {CARREGA_USUARIOS_EVENTOS = 1, EXIBIR_USUARIOS, COMPRAR_INGRESSOS, SAIR };
 enum menu2 {CINEMA = 1, SHOW, BOATE, FANTOCHE, CONCLUIR};
@@ -22,8 +23,7 @@ int main(){
   int opcao_principal = 0;
   int opcao_eventos = 0;
 
-	system("clear");
-	std::cout << "=> SISTEMA DE VENDAS DE INGRESSO" << std::endl << std::endl;
+	status("Sistema de vendas de ingressos iniciado...");
 
   while(opcao_principal != 4) {
     std::cout << "- O que você deseja fazer?" << std::endl;
@@ -40,8 +40,8 @@ int main(){
 			case CARREGA_USUARIOS_EVENTOS: {
         usuarios = setup_usuarios();
 				eventos = setup_eventos(usuarios);
-				system("clear");
-        std::cout << "[ STATUS ] Informações de eventos e usuários carregadas com sucesso...\n\n";
+
+				status("Informações de eventos e usuários carregadas com sucesso...");
 	      break;
       }
       case EXIBIR_USUARIOS: {
@@ -50,8 +50,8 @@ int main(){
 				std::cout << std::endl << "=> Pressione ENTER para retornar ao menu principal...";
 				std::cin.ignore();
 				std::cin.get();
-				system("clear");
-				std::cout << "[ STATUS ] Usuários listados com sucesso...\n\n";
+
+				status("Usuários listados com sucesso...");
 	      break;
       }
       case COMPRAR_INGRESSOS:{
@@ -71,16 +71,14 @@ int main(){
         
 				// Caso o usuario logado for inválido
 				if(usuario_logado == nullptr){
-					system("clear");
-					std::cout << "[ STATUS ] O usuário escolhido não existe..." << std::endl << std::endl;
+					status("O usuário escolhido não existe...");
 					break;
 				}
         
-				system("clear");
-				std::cout << "[ STATUS ] Usuário autenticado..." << std::endl << std::endl;
+				status("Usuário autenticado...");
 
 				while(opcao_eventos != 5){
-					std::cout << "- Você deseja comprar ingressos de qual evento?" << std::endl;
+					std::cout << "- Você deseja comprar ingressos de qual evento? (Digite 5 para concluir)" << std::endl;
 					std::cout << "1. Cinema" << std::endl;
 					std::cout << "2. Show" << std::endl;
 					std::cout << "3. Boate" << std::endl;
@@ -96,8 +94,7 @@ int main(){
 								Totem::initialize("cinema", usuario_logado->get_id(), eventos, usuarios);
 							}
 							catch(std::exception &error){
-								system("clear");
-								std::cout << "[ STATUS ] " << error.what() << std::endl << std::endl;
+								status(error.what());
 							}
 							break;
 						}
@@ -106,8 +103,7 @@ int main(){
 								Totem::initialize("show", usuario_logado->get_id(), eventos, usuarios);
 							}
 							catch(std::exception &error){
-								system("clear");
-								std::cout << "[ STATUS ] " << error.what() << std::endl << std::endl;
+								status(error.what());
 							}
 							break;
 						}
@@ -116,8 +112,7 @@ int main(){
 								Totem::initialize("boate", usuario_logado->get_id(), eventos, usuarios);
 							}
 							catch(std::exception &error){
-								system("clear");
-								std::cout << "[ STATUS ] " << error.what() << std::endl << std::endl;
+								status(error.what());
 							}
 							break;
 						}
@@ -126,8 +121,7 @@ int main(){
 								Totem::initialize("fantoche", usuario_logado->get_id(), eventos, usuarios);
 							}
 							catch(std::exception &error){
-								system("clear");
-								std::cout << "[ STATUS ] " << error.what() << std::endl << std::endl;
+								status(error.what());
 							}
 							break;
 						}
@@ -136,27 +130,24 @@ int main(){
 							break;
 						}
 						default: {
-							system("clear");
-							std::cout << "[ STATUS ] Opção inválida selecionada no menu de eventos..." << std::endl << std::endl;
+							status("Opção inválida selecionada no menu de eventos...");
 							break;
 						}
 					}
 				}
 
 				opcao_eventos = 0;
-				system("clear");
-				std::cout << "[ STATUS ] Saida do menu de eventos efetuada com sucesso..." << std::endl << std::endl;
+				status("Saida do menu de eventos efetuada com sucesso...");
 				break;
       }
       case SAIR: {
 				deallocate_usuarios(usuarios);
 				deallocate_eventos(eventos);
-        std::cout << "\n=> Aplicação sendo finalizada...\n\n";
+        std::cout << std::endl << "=> Aplicação sendo finalizada..." << std::endl << std::endl;
 				return 0;
       }
 			default: {
-				system("clear");
-				std::cout << "[ STATUS ] Opção inválida selecionada no menu principal..." << std::endl << std::endl;
+				status("Opção inválida selecionada no menu principal...");
 				break;
 			}
     }
