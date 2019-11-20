@@ -15,7 +15,6 @@
 
 class Totem {
   public:	
-		static void initialize (std::string tipo_evento, int usuario_id, std::vector<Evento*> eventos, std::vector<Usuario*> usuarios);
 		static void boot_cinema(int usuario_id, std::vector<Evento*> eventos, std::vector<Usuario*> usuarios);
 		static void boot_show(int usuario_id, std::vector<Evento*> eventos, std::vector<Usuario*> usuarios);
 		static void boot_boate(int usuario_id, std::vector<Evento*> eventos, std::vector<Usuario*> usuarios);

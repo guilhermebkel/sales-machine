@@ -1,20 +1,5 @@
 #include "totem/totem.h"
 
-void Totem::initialize(std::string tipo_evento, int usuario_id, std::vector<Evento*> eventos, std::vector<Usuario*> usuarios){
-	if(tipo_evento == "cinema"){
-		boot_cinema(usuario_id, eventos, usuarios);
-	}
-	else if(tipo_evento == "show"){
-		boot_show(usuario_id, eventos, usuarios);
-	}
-	else if(tipo_evento == "boate"){
-		boot_boate(usuario_id, eventos, usuarios);
-	}
-	else if(tipo_evento == "fantoche"){
-		boot_fantoche(usuario_id, eventos, usuarios);
-	}
-}
-
 void Totem::boot_cinema(int usuario_id, std::vector<Evento*> eventos, std::vector<Usuario*> usuarios){
 	int id_evento, id_horario, quantidade_ingressos;
 	

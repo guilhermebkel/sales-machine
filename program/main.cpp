@@ -10,6 +10,7 @@
 #include "helpers/usuarios/list.h"
 #include "helpers/eventos/setup.h"
 #include "helpers/screen/status.h"
+#include "helpers/screen/clear.h"
 
 enum menu1 {CARREGA_USUARIOS_EVENTOS = 1, EXIBIR_USUARIOS, COMPRAR_INGRESSOS, SAIR };
 enum menu2 {CINEMA = 1, SHOW, BOATE, FANTOCHE, CONCLUIR};
@@ -45,7 +46,8 @@ int main(){
 	      break;
       }
       case EXIBIR_USUARIOS: {
-				system("clear");
+				clear();
+				
         list_usuarios(usuarios);
 				std::cout << std::endl << "=> Pressione ENTER para retornar ao menu principal...";
 				std::cin.ignore();
@@ -91,7 +93,7 @@ int main(){
 					switch(opcao_eventos) {
 						case CINEMA: {
 							try{
-								Totem::initialize("cinema", usuario_logado->get_id(), eventos, usuarios);
+								Totem::boot_cinema(usuario_logado->get_id(), eventos, usuarios);
 							}
 							catch(std::exception &error){
 								status(error.what());
@@ -100,7 +102,7 @@ int main(){
 						}
 						case SHOW: {
 							try{
-								Totem::initialize("show", usuario_logado->get_id(), eventos, usuarios);
+								Totem::boot_show(usuario_logado->get_id(), eventos, usuarios);
 							}
 							catch(std::exception &error){
 								status(error.what());
@@ -109,7 +111,7 @@ int main(){
 						}
 						case BOATE: {
 							try{
-								Totem::initialize("boate", usuario_logado->get_id(), eventos, usuarios);
+								Totem::boot_boate(usuario_logado->get_id(), eventos, usuarios);
 							}
 							catch(std::exception &error){
 								status(error.what());
@@ -118,7 +120,7 @@ int main(){
 						}
 						case FANTOCHE: {
 							try{
-								Totem::initialize("fantoche", usuario_logado->get_id(), eventos, usuarios);
+								Totem::boot_fantoche(usuario_logado->get_id(), eventos, usuarios);
 							}
 							catch(std::exception &error){
 								status(error.what());
