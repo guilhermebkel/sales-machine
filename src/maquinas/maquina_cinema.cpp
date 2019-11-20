@@ -67,7 +67,7 @@ void MaquinaCinema::show_horarios(int filme_id){
 
   for(int i=0; i<filme_escolhido->get_horarios().size(); i++){
     std::cout << std::left;
-    std::cout << "| " << std::setw(2) << i+1 << ' ';
+    std::cout << "| " << std::setw(2) << i << ' ';
 
     std::string horario = std::to_string(filme_escolhido->get_horarios()[i]) + 'h';
 

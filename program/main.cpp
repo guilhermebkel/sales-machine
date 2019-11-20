@@ -128,7 +128,6 @@ int main(){
 							break;
 						}
 						case CONCLUIR: {
-							// opcao_principal = 4;
 							clear();
 							Totem::get_report(eventos, usuarios);
 							std::cout << std::endl << "=> Pressione ENTER para retornar ao menu principal...";

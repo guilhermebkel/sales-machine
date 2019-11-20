@@ -63,7 +63,7 @@ void MaquinaFantoche::show_horarios(int teatro_id){
 
   for(int i=0; i<teatro_escolhido->get_horarios().size(); i++){
     std::cout << std::left;
-    std::cout << "| " << std::setw(2) << i+1 << ' ';
+    std::cout << "| " << std::setw(2) << i << ' ';
 
     std::string horario = std::to_string(teatro_escolhido->get_horarios()[i]) + 'h';
 
