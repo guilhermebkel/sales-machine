@@ -35,6 +35,9 @@ std::vector<Evento*> setup_eventos(std::vector<Usuario*> usuarios){
 		std::getline(eventosDatabase, eventoId, ',');
 		std::getline(eventosDatabase, eventoPublico, ',');
 
+		// Caso durante a leitura, ocorrer uma fuga do padrão de leitura
+		// e aparecer "cinema" onde deveria ser o tipo do evento
+		// é adicionado "cinema" na variável tipo
 		if(!eventoPublico.compare("cinema")){
 			eventoTipo = eventoPublico;
 		}
@@ -46,6 +49,9 @@ std::vector<Evento*> setup_eventos(std::vector<Usuario*> usuarios){
 		std::getline(eventosDatabase, eventoResponsavel_id, ',');
 		std::getline(eventosDatabase, eventoNumTipos, ',');
 
+		// Pega linha completa depois de NumTipos para começar
+		// uma iteração baseada no tipo do evento, visto que
+		// cada evento dispõe de informações diferentes
 		std::getline(eventosDatabase, linha);
 		stream_string = std::istringstream(linha);
 		contador = 0;
@@ -60,6 +66,7 @@ std::vector<Evento*> setup_eventos(std::vector<Usuario*> usuarios){
 			}
 			// Começa a salvar dados de acordo com o tipo do evento
 			else{
+				// Caso o evento for do tipo adulto, salva a quota de idoso
 				if(contador == std::stoi(eventoNumTipos)*2 && eventoPublico == "adulto"){
 					eventoQuota_idoso = std::stoi(termo);
 				}
