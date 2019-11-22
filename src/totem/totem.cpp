@@ -10,7 +10,7 @@
 
 std::set<int, unique_id> Totem::eventos_modificados;
 std::set<int, unique_id> Totem::usuarios_modificados;
-//
+
 // Adiciona import customizado de "helpers/screen/*"
 // para evitar erro de dependência circular
 void status(std::string message);
